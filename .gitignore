@@ -1,0 +1,26 @@
+.DS_store
+.metadata
+*.class
+**/target
+.recommenders
+bin
+.idea
+*.iml
+
+# MS Office
+*.tmp
+
+# LibreOffice
+.~lock.*#
+
+# RC2 output
+default
+
+# HotSpot crash logs
+hs_err_pid*
+
+# installer files
+rc2-dist/
+ReliefPlanning/package/
+HealthPlanning/package/
+/${sys:LOG_PATH}/

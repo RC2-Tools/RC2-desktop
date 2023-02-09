@@ -1,0 +1,59 @@
+<!--
+  ~ Copyright (c) 2016-2022 University of Washington
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  ~
+  ~ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  ~ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+  ~ * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="row menu-item-row" th:fragment="item(href, text, icon, helpText, disabled)">
+    <!--/*@thymesVar id="href" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="text" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="icon" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="helpText" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="disabled" type="java.lang.Boolean"*/-->
+
+    <div class="col-lg-8 col-12">
+        <a class="btn btn-custom-lg btn-primary btn-block d-flex align-items-center rounded-pill"
+           th:href="${href}" th:classappend="${disabled}? 'disabled'">
+            <div class="d-flex justify-content-center align-items-center rounded-circle menu-item-icon">
+                <img th:src="${icon}" th:alt="${text}">
+            </div>
+
+            <span class="mr-auto text-uppercase font-weight-bold" th:text="${text}"></span>
+            <th:block th:if="${helpText}" th:insert="~{fragments/tooltip :: tooltip(${helpText})}"/>
+        </a>
+    </div>
+</div>
+
+<div class="row mb-3 justify-content-around" th:fragment="heading(text)">
+    <!--/*@thymesVar id="text" type="java.lang.String"*/-->
+
+    <div class="col-auto d-flex align-items-center">
+        <h1 id="menu-title" class="mb-0 text-uppercase" th:text="${text}"></h1>
+    </div>
+
+    <div id="menuLogoColumn" class="col-auto">
+        <div class="row align-items-center h-100">
+            <div class="col-auto h-75 pr-0 mr-3">
+                <img th:src="@{/img/ifrc_logo.svg}" class="h-100" alt="ifrc logo"/>
+            </div>
+            <div class="col-auto v1-blue h-100 p-0"></div>
+            <div class="col-auto h-75 p-1 ml-3 rc-red-bg">
+                <img th:src="@{/img/rc2_logo_red_cropped.svg}" class="h-100 rc-red-bg" alt="rc2 logo"/>
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

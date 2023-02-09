@@ -1,0 +1,5 @@
+_id,_form_id,_locale,_savepoint_type,_savepoint_timestamp,_savepoint_creator,_create_user,_last_update_user,_deleted,_data_etag_at_modification,_row_etag,beneficiary_entity_id,custom_beneficiary_entity_form_id,custom_beneficiary_entity_row_id,date_created,_default_access,_group_modify,_group_privileged,_group_read_only,_row_owner,status,status_reason
+1,,,,,,,,false,,,1,,,2017-09-11T22:29:36.009000000,FULL,,,,,ENABLED,
+2,,,,,,,,false,,,2,,,2017-09-11T22:32:13.678000000,FULL,,,,,ENABLED,
+3,,,,,,,,false,,,2,,,2017-09-11T22:50:55.424000000,FULL,,,,,ENABLED,
+4,,,,,,,,false,,,4,,,2017-09-11T22:56:27.268000000,FULL,,,,,DISABLED,Moved away

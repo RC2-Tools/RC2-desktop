@@ -1,0 +1,368 @@
+/* montserrat-100 - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 100;
+    src: local('Montserrat Thin'), local('Montserrat-Thin'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-100.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-200 - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 200;
+    src: local('Montserrat ExtraLight'), local('Montserrat-ExtraLight'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-200.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-100italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 100;
+    src: local('Montserrat Thin Italic'), local('Montserrat-ThinItalic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-100italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-200italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 200;
+    src: local('Montserrat ExtraLight Italic'), local('Montserrat-ExtraLightItalic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-200italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-300 - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 300;
+    src: local('Montserrat Light'), local('Montserrat-Light'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-300.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-regular - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 400;
+    src: local('Montserrat Regular'), local('Montserrat-Regular'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-regular.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 400;
+    src: local('Montserrat Italic'), local('Montserrat-Italic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-300italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 300;
+    src: local('Montserrat Light Italic'), local('Montserrat-LightItalic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-300italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-500 - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 500;
+    src: local('Montserrat Medium'), local('Montserrat-Medium'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-500.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-500italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 500;
+    src: local('Montserrat Medium Italic'), local('Montserrat-MediumItalic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-500italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-600 - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 600;
+    src: local('Montserrat SemiBold'), local('Montserrat-SemiBold'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-600.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-600italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 600;
+    src: local('Montserrat SemiBold Italic'), local('Montserrat-SemiBoldItalic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-600italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-700 - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 700;
+    src: local('Montserrat Bold'), local('Montserrat-Bold'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-700.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-700italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 700;
+    src: local('Montserrat Bold Italic'), local('Montserrat-BoldItalic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-700italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-800 - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 800;
+    src: local('Montserrat ExtraBold'), local('Montserrat-ExtraBold'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-800.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-800italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 800;
+    src: local('Montserrat ExtraBold Italic'), local('Montserrat-ExtraBoldItalic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-800italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-900 - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: normal;
+    font-weight: 900;
+    src: local('Montserrat Black'), local('Montserrat-Black'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-900.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+/* montserrat-900italic - latin_latin-ext */
+@font-face {
+    font-family: 'Montserrat';
+    font-style: italic;
+    font-weight: 900;
+    src: local('Montserrat Black Italic'), local('Montserrat-BlackItalic'),
+    url('../fonts/montserrat/montserrat-v14-latin_latin-ext-900italic.woff') format('woff'); /* Chrome 6+, Firefox 3.6+, IE 9+, Safari 5.1+ */
+}
+
+:root {
+    --rc-red: #ee3224;
+    --rc2-background-color: white;
+    --nav-height: 4.5rem;
+    --sidebar-width: 300px;
+    --rc2-font-family-sans-serif: 'Montserrat', var(--font-family-sans-serif);
+}
+
+body {
+    background-color: var(--rc2-background-color);
+    padding-top: var(--nav-height);
+    font-family: var(--rc2-font-family-sans-serif);
+}
+
+main {
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+.rc-red {
+    color: var(--rc-red);
+}
+
+.rc-red-bg {
+    background-color: var(--rc-red);
+}
+
+.v1-blue {
+    width: 6px;
+    background-color: black;
+}
+
+.btn-primary {
+    background-color: var(--rc-red);
+    border-color: var(--rc-red);
+}
+
+.btn-custom-lg {
+    padding: 0.5em 0.5em;
+    font-size: 1.25rem;
+    line-height: 1.5;
+    height: 100%;
+
+    background-color: #4d4d4d;
+    border-color: #4d4d4d;
+}
+
+.paginationDiv {
+    margin: 1rem
+}
+
+.paginationNumberDiv {
+    float: right;
+}
+
+/* Same as Bootstrap's display-4 but with a smaller font-size */
+.display-5 {
+    font-size: 2.5rem;
+    font-weight: 300;
+    line-height: 1.2;
+}
+
+.table-light.table-hover tbody tr:hover, .selected-tr {
+    background-color: var(--blue);
+}
+
+.form-control-table {
+    border-collapse: separate;
+    border-spacing: 0;
+    border: 1px solid #ced4da;
+    border-radius: 0.25rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .form-control-table {
+        transition: none;
+    }
+}
+
+.form-control-table:focus {
+    border-color: #80bdff;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.tree-list {
+    max-height: 20em;
+}
+
+.tree-list, .tree-list ul, .tree-list li {
+    position: relative;
+}
+
+.tree-list ul {
+    list-style: none;
+    padding-left: 32px;
+    overflow: auto;
+}
+
+.tree-list span {
+    cursor: pointer;
+}
+
+.tree-list span:hover {
+    text-decoration: underline;
+}
+
+.tree-list li::before, .tree-list li::after {
+    content: "";
+    position: absolute;
+    left: -12px;
+}
+
+.tree-list li::before {
+    border-top: 1px solid blue;
+    top: 9px;
+    width: 8px;
+    height: 0;
+}
+
+.tree-list li::after {
+    border-left: 1px solid black;
+    top: 2px;
+    width: 0;
+    height: 100%;
+}
+
+.tree-list ul > li:last-child::after {
+    height: 8px;
+}
+
+.menu-item-row {
+    margin-bottom: 1rem;
+}
+
+.menu-item-icon {
+    --menu-item-icon-dim: 3.5em;
+
+    background: var(--rc-red);
+    height: var(--menu-item-icon-dim);
+    width: var(--menu-item-icon-dim);
+    min-height: var(--menu-item-icon-dim);
+    min-width: var(--menu-item-icon-dim);
+    margin: 0 1em 0 0;
+}
+
+.menu-item-icon > img {
+    height: 60%;
+    width: 60%;
+}
+
+/* TODO: decide if the list should be styled this way */
+/*.tree-list > ul > li:first-child::after {*/
+/*    top: 10px;*/
+/*}*/
+
+table.is-invalid {
+    border: 1px solid #dc3545;
+    padding-right: calc(1.5em + 0.75rem);
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23dc3545' viewBox='-2 -2 7 7'%3e%3cpath stroke='%23dc3545' d='M0 0l3 3m0-3L0 3'/%3e%3ccircle r='.5'/%3e%3ccircle cx='3' r='.5'/%3e%3ccircle cy='3' r='.5'/%3e%3ccircle cx='3' cy='3' r='.5'/%3e%3c/svg%3E");
+    background-repeat: no-repeat;
+    background-position: top calc(0.375em + 0.1875rem) right calc(0.375em + 0.1875rem);
+    background-size: calc(0.75em + 0.375rem) calc(0.75em + 0.375rem);
+    /* TODO: The border doesn't work */
+    border-radius: 0.25rem;
+    margin: 0;
+}
+
+table.is-invalid:focus {
+    border-color: #dc3545;
+    box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+}
+
+table.is-invalid ~ .invalid-feedback {
+    display: block;
+}
+
+.selected-criteria-item {
+    text-decoration: underline;
+}
+
+.pseudo-modal {
+    display: unset !important;
+    z-index: 60 !important;
+
+    top: var(--nav-height) !important;
+    left: var(--sidebar-width);
+    width: calc(100vw - var(--sidebar-width));
+}
+
+.pseudo-modal-backdrop {
+    top: var(--nav-height) !important;
+    z-index: 50 !important;
+}
+
+/* Override Bootstrap's popover and tooltip font-family */
+.popover, .tooltip {
+    font-family: var(--rc2-font-family-sans-serif);
+}
+
+#mainNavBar {
+    font-size: 2em;
+    background-color: #666666;
+    max-height: var(--nav-height);
+}
+
+#menu-title {
+    font-weight: 900;
+    font-size: 3.25rem;
+}
+
+#menuLogoColumn {
+    height: 6rem;
+}
+
+#locationTBody, #distItemTbody {
+    overflow-wrap: break-word;
+    word-break: break-all;
+}
+
+#newDistAssignBarcode .card {
+    background-color: var(--rc2-background-color);
+}

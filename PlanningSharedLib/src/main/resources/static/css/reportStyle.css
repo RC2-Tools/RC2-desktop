@@ -1,0 +1,49 @@
+.reportTable th,
+.reportTable td,
+.reportSplitTable th,
+.reportSplitTable td {
+    padding: 15px;
+    text-align: center;
+    border: 1px solid #000000;
+    border-collapse: collapse;
+}
+
+.light-gray {
+    background-color: #D3D3D3;
+}
+
+.dark-gray {
+    background-color: #808080;
+}
+
+.reportHeader,
+.reportTable {
+    border-collapse: collapse;
+    width: 100%;
+}
+
+.reportSplitTable {
+    border-collapse: collapse;
+}
+
+.reportHeaderText {
+    padding-left: 1rem;
+    text-align:  right;
+    font-size: 1.25rem;
+}
+
+.reportLogo img {
+    width: 90%;
+}
+
+.column {
+    width: 49%;
+}
+
+.leftColumn {
+    float: left;
+}
+
+.rightColumn {
+    float: right;
+}

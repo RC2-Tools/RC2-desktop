@@ -1,0 +1,193 @@
+<!--
+  ~ Copyright (c) 2016-2022 University of Washington
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  ~
+  ~ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  ~ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+  ~ * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="barcodeRange(barcodeRangeField, barcodeRangeList, formId)">
+<div class="form-group">
+    <label for="rangeList" th:text="#{EnterBarcodeRanges}"></label>
+    <div class="row">
+        <div class="input-group col-10">
+            <div class="input-group-prepend"><label for="rangeMin" class="input-group-text"
+                                                    th:text="#{Min}"></label></div>
+            <input type="number" class="form-control" th:placeholder="#{EnterTheMinimum}"
+                   id="rangeMin">
+            <div class="input-group-prepend input-group-append"><span class="input-group-text"
+                                                                      th:text="#{to}"></span></div>
+            <input type="number" class="form-control" th:placeholder="#{EnterTheMaximum}"
+                   id="rangeMax">
+            <div class="input-group-append"><label for="rangeMax" class="input-group-text"
+                                                   th:text="#{Max}"></label></div>
+        </div>
+
+        <div class="col-2">
+            <button type="button" class="btn btn-secondary btn-block" onclick="addRangeOnClick()"
+                    th:text="#{Add}">
+            </button>
+        </div>
+    </div>
+</div>
+
+<div class="form-group row">
+    <th:block th:if="${barcodeRangeField} != null">
+        <input type="hidden" id="barcodeRange" th:form="${formId}" th:field="*{__${barcodeRangeField}__}">
+    </th:block>
+
+    <div class="col-10">
+        <select class="form-control" id="rangeList" size="5">
+            <option th:if="${barcodeRangeList} != _"
+                    th:each="range : ${barcodeRangeList}"
+                    th:text="|${range.min}-${range.max}|"></option>
+        </select>
+    </div>
+
+    <div class="col-2">
+        <div class="btn-group-vertical btn-block">
+            <button type="button" class="btn btn-secondary" onclick="removeRange()"
+                    th:text="#{ResetCaseBtnTxt}"></button>
+            <button type="button" class="btn btn-secondary" onclick="clearRanges()"
+                    th:text="#{ResetAllCasesBtnTxt}"></button>
+        </div>
+    </div>
+</div>
+
+<div class="form-group mb-0">
+    <button type="button" class="btn btn-secondary btn-sm" th:text="#{ImportFromCsv}"
+            onclick="getCsvFile()"></button>
+</div>
+<script th:inline="javascript">
+/*<![CDATA[*/
+
+    var invalidRangeErrMsg = /*[[#{InvalidRangeError}]]*/ 'Invalid range';
+
+/*]]>*/
+</script>
+
+<script>
+    'use strict';
+
+    document.addEventListener('DOMContentLoaded', e => {
+      let barcodeRange = document.getElementById('barcodeRange').value;
+
+      if (barcodeRange !== undefined && barcodeRange !== null && barcodeRange !== '') {
+        let barcodeRangeArr = JSON.parse(barcodeRange);
+        clearRanges();
+        barcodeRangeArr.forEach(range => addRange(range.min, range.max));
+      }
+    });
+
+    function addRange(min, max) {
+      min = parseInt(min);
+      max = parseInt(max);
+
+      if (min === null || min === undefined || Number.isNaN(min)||
+        max === null || max === undefined || Number.isNaN(max) ||
+        min > max) {
+        window.javafx.openFxErrorDialog(invalidRangeErrMsg);
+        return;
+      }
+
+      let rangeList = document.getElementById('rangeList');
+
+      let newOpt = document.createElement('option');
+      newOpt.text = `${min}-${max}`;
+
+      rangeList.appendChild(newOpt);
+
+      updateBarcodeJson();
+    }
+
+    function addRangeOnClick() {
+      let minValElement = document.getElementById('rangeMin');
+      let maxValElement = document.getElementById('rangeMax');
+
+      addRange(parseInt(minValElement.value), parseInt(maxValElement.value));
+
+      minValElement.value = null;
+      maxValElement.value = null;
+    }
+
+    function removeRange() {
+      let selectedOption = document.getElementById('rangeList').selectedOptions[0];
+
+      if (selectedOption !== undefined || selectedOption !== null) {
+        selectedOption.remove();
+      }
+
+      updateBarcodeJson();
+    }
+
+    function clearRanges() {
+      document.getElementById('rangeList').innerHTML = '';
+      updateBarcodeJson();
+    }
+
+    function toRange(min, max) {
+      return {
+        min: min,
+        max: max
+      }
+    }
+
+    function updateBarcodeJson() {
+      let ranges = [];
+
+      for (let opt of document.getElementById('rangeList').options) {
+        let minMax = opt.text.split('-');
+        ranges.push(toRange(minMax[0], minMax[1]));
+      }
+
+      document.getElementById('barcodeRange').value = JSON.stringify(ranges);
+    }
+
+    function getCsvFile() {
+        var cbFn = "importRangeFromCsv";
+        javafx.openFileDialogForCsv(cbFn);
+    }
+
+    function importRangeFromCsv(csvFilePath) {
+        console.log("In import range!!");
+        if (csvFilePath === null || csvFilePath === undefined)
+            return;
+
+        fetch(window.origin + '/other/getCsvRange?fileLocation='
+            + encodeURIComponent(csvFilePath),
+            {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            }
+        ).then(response => {
+            console.log("Got the response: " + response);
+            return response.json();
+        }).then(data => {
+            console.log("Response.json data is " + data);
+            for(var i = 0; i < data.length; i++) {
+                var min = data[i].min;
+                var max = data[i].max;
+                let newOpt = document.createElement('option');
+                newOpt.text = '' + min + '-' + max;
+
+                rangeList.appendChild(newOpt);
+            }
+
+            updateBarcodeJson();
+        }).catch(e => console.error(e));
+    }
+
+</script>
+</th:block>
+</html>

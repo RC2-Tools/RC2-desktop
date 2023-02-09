@@ -1,0 +1,141 @@
+<!--
+  ~ Copyright (c) 2016-2022 University of Washington
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  ~
+  ~ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  ~ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+  ~ * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: createDistNVisitLayout (~{::page}, #{DistributionCreator})}">
+<th:block th:fragment="page">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{DistributionCreator})}"/>
+    <th:block th:insert="~{fragments/sectionNavigation :: distribution('auth')}"/>
+
+    <th:block th:insert="~{authorization/newAuthBackground :: background}"/>
+    <th:block th:insert="~{fragments/pseudoModal :: modal(~{::modalHeader}, ~{::modalContent}, ~{::modalFooter})}"/>
+</main>
+
+<script>
+  function tableOnclick(context) {
+    document.getElementById('newDistItem').value = context.id;
+
+    for (let row of document.getElementById('distItemTbody').rows) {
+      row.classList.remove('selected-tr');
+    }
+
+    context.classList.add('selected-tr');
+  }
+</script>
+</th:block>
+
+<th:block th:fragment="modalHeader">
+    <th:block th:insert="~{authorization/newAuthTitle :: title(#{ItemDelivery})}"/>
+    <th:block th:insert="~{fragments/sectionNavigation :: authorization('delivery')}"/>
+</th:block>
+
+<div class="row" th:fragment="modalContent">
+    <form method="post" class="col-12" id="newDistItemForm" th:object="${newAuthForm}">
+        <div class="form-group row">
+            <div class="col-2">
+                <label class="col-form-label">
+                    <th:block th:text="#{Item}"/>&nbsp;
+                    <th:block th:insert="~{fragments/tooltip :: tooltip(#{ItemTT})}"/>
+                </label>
+                <small class="form-text text-muted" th:text="#{SelectItemHint}"></small>
+            </div>
+            <input type="hidden" id="newDistItem" th:field="*{itemId}">
+            <div class="col-8">
+                <table class="table table-light table-sm table-borderless table-hover form-control-table"
+                       tabindex="-1" th:classappend="${#fields.hasErrors('itemId')}? 'is-invalid'">
+                    <thead>
+                    <tr>
+                        <th scope="col" th:text="#{Item}"></th>
+                        <th scope="col" th:text="#{DescriptionLabel}"></th>
+                    </tr>
+                    </thead>
+                    <tbody id="distItemTbody">
+                    <tr th:each="item: ${itemList}" th:id="${item.id}"
+                        th:classappend="(${item.id} == *{itemId})? 'selected-tr'"
+                        onclick="tableOnclick(this)">
+                        <td th:text="${item.name}"></td>
+                        <td th:text="${item.description}"></td>
+                    </tr>
+                    </tbody>
+                </table>
+                <th:block th:insert="~{fragments/feedback :: msg('newAuthForm.itemId')}"/>
+            </div>
+            <div class="col-2">
+                <button type="submit" class="btn btn-sm btn-secondary"
+                        form="newDistItemForm" formaction="?item"
+                        th:text="#{Add}"></button>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <label for="newDistDeliveryForm" class="col-2 col-form-label">
+                <th:block th:text="#{CustomDeliveryFormBtnTxt}"/>&nbsp;
+                <th:block th:insert="~{fragments/tooltip :: tooltip(#{DeliveryFormTT})}"/>
+            </label>
+            <div class="col-5" th:insert="~{fragments/xlsxFileChooser ::
+                    chooser('newDistItemForm', 'deliveryForm', 'newDistDeliveryForm',
+                    ${newAuthForm.deliveryForm}? ${newAuthForm.deliveryForm.formId})}"></div>
+            <th:block th:insert="~{fragments/xlsxFileChooser :: indicators('newDistDeliveryForm')}"/>
+        </div>
+
+        <div class="form-group row">
+            <label for="newDistExtraFieldEnt" class="col-2 col-form-label">
+                <th:block th:text="#{ExtraFieldEntitlementLabel}"/>&nbsp;
+                <th:block th:insert="~{fragments/tooltip :: tooltip(#{DistributionExtraFieldEntitlementTT})}"/>
+            </label>
+            <div class="col-auto">
+                <select class="form-control custom-select" size="1" id="newDistExtraFieldEnt"
+                        th:field="*{extraFieldEntitlement}"
+                        th:errorclass="is-invalid">
+                    <option th:each="opt : ${extraFieldEnt}"
+                            th:text="#{|ExtraFieldEntitlements.${opt}|}"
+                            th:value="${opt.name()}"></option>
+                </select>
+                <th:block th:insert="~{fragments/feedback :: msg('newAuthForm.extraFieldEntitlement')}"/>
+            </div>
+        </div>
+
+
+        <div class="form-group">
+            <button class="btn btn-secondary" type="button" data-toggle="collapse"
+                    data-target="#newDistAssignBarcode">
+                <th:block th:text="#{AssignBarcodeToItems}"/>
+                <th:block th:insert="~{fragments/tooltip :: tooltip(#{DistributionAssignBarcodesTT})}"/>
+            </button>
+        </div>
+        <div class="collapse" id="newDistAssignBarcode">
+            <div class="card card-body form-group border-primary">
+                <div class="form-group form-check row d-flex pl-0">
+                    <label for="newDistSpecificBarcode" class="col-auto form-check-label"
+                           th:text="#{AssignCodeCheckboxLabel}"></label>
+                    <div class="col-auto">
+                        <input type="checkbox" class="form-check-input ml-0" id="newDistSpecificBarcode"
+                               th:field="*{assignSpecificBarcode}">
+                    </div>
+                </div>
+
+                <th:block th:insert="~{fragments/barcodeRange::barcodeRange(
+                    'barcodeRange', ${newAuthForm.barcodeRangeList},'newDistItemForm')}"/>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div th:fragment="modalFooter">
+    <button type="submit" class="btn btn-primary btn-lg" form="newDistItemForm" th:text="#{NextBtnTxt}"></button>
+</div>
+</html>

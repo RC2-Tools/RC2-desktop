@@ -1,0 +1,92 @@
+<!--
+  ~ Copyright (c) 2016-2022 University of Washington
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  ~
+  ~ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  ~ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+  ~ * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="sidebarLayout">
+    <ul class="list-unstyled components">
+        <li th:unless="${isNoRegMode}">
+            <a href="#beneficiaryDataSideMenu" data-toggle="collapse" aria-expanded="false"
+               class="dropdown-toggle" th:text="#{BeneficiaryData}"></a>
+            <ul class="collapse list-unstyled" id="beneficiaryDataSideMenu">
+                <li>
+                    <a th:href="@{/beneficiary/changeStatus}" th:text="#{EnableDisableBeneficiaries}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/beneficiary/downloadData}" th:text="#{DownloadBeneficiaryDatabase}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/visit/createVisit}" th:text="#{CreateVisit}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/visit/viewVisits}" th:text="#{ViewVisits}"></a>
+                </li>
+                <li>
+                    <a th:href="${#mvc.url('RTC#viewVisitTemplates').build()}" th:text="#{ViewVisitTemplates}"></a>
+                </li>
+
+            </ul>
+        </li>
+        <li th:unless="${isNoRegMode}">
+            <a href="#distributionSideMenu" data-toggle="collapse" aria-expanded="false"
+               class="dropdown-toggle" th:text="#{Distribution}"></a>
+            <ul class="collapse list-unstyled" id="distributionSideMenu">
+                <li>
+                    <a th:href="${#mvc.url('DC#newDistribution').build()}" th:text="#{CreateDistribution}"></a>
+                </li>
+                <li>
+                    <a th:href="${#mvc.url('DC#viewDistList').build()}" th:text="#{ViewDistributions}"></a>
+                </li>
+                <li>
+                    <a th:href="${#mvc.url('RTC#viewDistTemplates').build()}" th:text="#{ViewDistributionTemplates}"></a>
+                </li>
+
+            </ul>
+        </li>
+        <li th:unless="${isNoRegMode}">
+            <a href="#otherSideMenu" data-toggle="collapse" aria-expanded="false"
+               class="dropdown-toggle" th:text="#{OtherOptions}"></a>
+            <ul class="collapse list-unstyled" id="otherSideMenu">
+                <li>
+                    <a th:href="@{/other/barcodes}" th:text="#{CreateBarcodes}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/location/new/other}" th:text="#{CreateLocations}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/location/view}" th:text="#{ViewLocations}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/item/new/other}" th:text="#{CreateItems}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/item/view}" th:text="#{ViewItems}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/rctemplate/import}" th:text="#{ImportTemplates}"></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a th:href="@{/report}" th:text="#{Reports}"></a>
+        </li>
+        <li th:unless="${isNoRegMode}">
+            <a th:href="@{/export}" th:text="#{ExportSrvBtnLabel}"></a>
+        </li>
+    </ul>
+</th:block>
+</html>

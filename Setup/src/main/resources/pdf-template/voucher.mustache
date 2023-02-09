@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        @page {
+            background-color: white;
+            size: 8.5in 11in;
+            margin: 0.5cm;
+        }
+        body {
+            background: white;
+            padding: 0;
+            margin: 0;
+        }
+
+        .vouchers {
+            width: 100%;
+        }
+
+        .voucher {
+            width: 45%;
+            height: 5cm;
+            display: inline-block;
+            border: solid black 1px;
+            margin: 1%;
+            padding: 1%;
+        }
+
+        .voucher-text {
+            text-align: center;
+            font-size: x-large;
+            margin: 3% auto;
+        }
+
+        .voucher-barcode {
+            text-align: center;
+            margin: 0 auto;
+            width: inherit;
+            height: inherit;
+        }
+
+        .voucher-barcode img {
+            width: auto;
+            height: 50%;
+        }
+
+        .red-cross-logo-vzla {
+            width: 13%;
+            height: 13%;
+        }
+		
+		.red-cross-logo-ifrc {
+            width: 16%;
+            height: 16%;
+        }
+    </style>
+</head>
+
+<body>
+<div class="vouchers">
+    {{#vouchers}}
+        <div class="voucher">
+            <img class="red-cross-logo-vzla" src="img/Logo-Cruz-Roja-VE.jpg">
+			<img class="red-cross-logo-ifrc" src="img/Logo-Square-RGB-email.png" align="right">
+            <div class="voucher-text">
+                {{text}}
+            </div>
+            <div class="voucher-barcode">
+                <img src="{{barcodeDataUri}}">
+            </div>
+        </div>
+    {{/vouchers}}
+</div>
+</body>
+</html>

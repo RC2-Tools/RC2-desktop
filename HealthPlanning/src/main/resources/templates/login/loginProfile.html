@@ -1,0 +1,124 @@
+<!--
+  ~ Copyright (c) 2016-2022 University of Washington
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  ~
+  ~ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  ~ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+  ~ * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: loginLayout (~{::page}, #{ChooseProfile})}">
+<body>
+<th:block th:fragment="page">
+<main role="main" class="container" id="profileDropdown">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ChooseProfile})}"/>
+
+    <div class="row">
+        <div class="col-10">
+            <select class="custom-select" id="chooseProfile" size="5">
+                <option th:each="profile : ${loginFormModel.profileList}"
+                        data-toggle="collapse" th:attr="data-target=${'#' + profile.name + 'Profile'}"
+                        th:text="${profile.name}"
+                        th:selected="${profile.name == loginFormModel.profile}"></option>
+            </select>
+        </div>
+        <div class="col-2">
+            <a class="btn btn-secondary btn-block" th:href="@{/profile/new}" th:text="#{Add}"></a>
+        </div>
+    </div>
+
+    <div th:each="profile : ${loginFormModel.profileList}"
+         class="collapse" th:id="|${profile.name}Profile|" data-parent="#profileDropdown"
+         th:classappend="${profile.name.equals(loginFormModel.profile)}? 'show'">
+        <div class="card card-body p-2"
+             th:with="errClass = ${profile.name == loginFormModel.profile}? 'is-invalid' : ''">
+            <div class="row">
+                <form method="post" class="col-12" th:object="${loginFormModel}">
+                    <div class="form-group">
+                        <label th:for="|${profile.name}Url|" th:text="#{RC2ServerAddress}"></label>
+                        <input type="text" class="form-control"
+                               th:id="|${profile.name}Url|" name="serverUrl"
+                               th:value="${profile.serverUrl}"
+                               th:readonly="${!#strings.isEmpty(profile.serverUrl)}"
+                               th:errorclass="${errClass}"
+                               th:insert="~{fragments/feedback :: msg('loginFormModel.serverUrl')}">
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="|${profile.name}Username|" th:text="#{UsernameLabel}"></label>
+                        <input type="text" class="form-control"
+                               th:id="|${profile.name}Username|" name="username"
+                               th:value="${profile.username}"
+                               th:errorclass="${errClass}"
+                               th:insert="~{fragments/feedback :: msg('loginFormModel.username')}">
+                    </div>
+
+                    <div class="form-group">
+                        <label th:for="|${profile.name}Password|" th:text="#{PasswordLabel}"></label>
+                        <div class="input-group mb-3">
+                            <input type="password" class="form-control" th:id="|${profile.name}Password|"
+                                th:field="*{password}" th:errorclass="${errClass}">
+                            <div class="input-group-append">
+                                <div class="input-group-text" >
+                                    <div class="custom-control custom-checkbox" >
+                                        <input class="custom-control-input"
+                                            type="checkbox" th:id="|${profile.name}ShowPassword|"
+                                            th:data-password-id="|${profile.name}Password|" onclick="toggleShowPassword(this)" >
+                                        <label class="custom-control-label" th:for="|${profile.name}ShowPassword|"
+                                           th:text="#{ShowPasswordLabel}"></label>
+                                    </div>
+                                </div>
+                            </div>
+                            <th:block th:insert="~{fragments/feedback :: msg('loginFormModel.password')}" />
+                        </div>
+                    </div>
+
+                    <input type="hidden" name="type" th:value="RC2_SERVER">
+                    <input type="hidden" name="profile" th:value="${profile.name}">
+
+                    <button type="submit"
+                            class="btn btn-primary btn-lg d-flex mx-auto text-center px-5 py-3"
+                            th:formaction="@{/login/downloadData}"
+                            th:text="#{DownloadValidateAndContinue}"
+                            data-target="#pleaseWaitModal" data-toggle="modal">
+                    </button>
+
+                    <div class="d-flex justify-content-end mt-1">
+                        <a class="btn btn-secondary text-center mr-1" th:text="#{LocalDataDirectory}"
+                           th:href="@{/login/localData(profile=${profile.name})}"></a>
+                        <button type="submit"
+                                class="btn btn-secondary text-center"
+                                th:formaction="@{/login/lastSnapshot}"
+                                th:text="#{LastGoodSnapshot}"
+                                data-target="#pleaseWaitModal" data-toggle="modal"></button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <th:block th:insert="~{login/pleaseWaitModalFragment :: modal}"/>
+</main>
+<script>
+    'use strict';
+
+    function toggleShowPassword(element) {
+        let passwordId = document.getElementById(element.dataset.passwordId);
+        if (passwordId.type === "password") {
+            passwordId.type = "text";
+        } else {
+            passwordId.type = "password";
+        }
+}
+</script>
+</th:block>
+</body>
+</html>

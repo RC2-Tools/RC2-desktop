@@ -1,0 +1,74 @@
+<!--
+  ~ Copyright (c) 2016-2022 University of Washington
+  ~ All rights reserved.
+  ~
+  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
+  ~
+  ~ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+  ~ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+  ~ * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+  ~
+  ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+  ~
+  -->
+
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: loginLayout (~{::page}, #{ChooseProfile})}">
+<th:block th:fragment="page">
+<main role="main" class="container" id="profileDropdown">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ChooseProfile} + '—' + #{LocalDataDirectory})}"/>
+
+    <div class="row">
+        <form method="post" class="col-12" th:object="${loginFormModel}">
+            <div class="form-group">
+                <div class="custom-file" onclick="launchLocalDataFileDialog()">
+                    <input type="hidden" id="dataDirType"
+                           value="LOCAL_DATA_DIRECTORY" name="type">
+                    <input type="text" class="custom-file-input" id="customFile"
+                           th:field="*{inputDataDirectory}" th:errorclass="is-invalid"
+                           th:insert="~{fragments/feedback :: msg('loginFormModel.inputDataDirectory')}">
+                    <label class="custom-file-label" for="customFile"
+                           id="customFileLabel"
+                           th:data-browse="#{Browse}"
+                           th:text="*{inputDataDirectory} ? *{inputDataDirectory} : #{ChooseInputDataDirectory}"></label>
+                </div>
+            </div>
+
+            <button type="submit" id="localDataDirContinueButton"
+                    class="btn btn-primary btn-lg d-flex mx-auto text-center px-5 py-3"
+                    data-target="#pleaseWaitModal" data-toggle="modal"
+                    th:text="#{ContinueLabel}">
+            </button>
+        </form>
+    </div>
+
+    <th:block th:insert="~{login/pleaseWaitModalFragment :: modal}"/>
+</main>
+
+<script>
+  function launchLocalDataFileDialog() {
+    console.log("Clicked file dialog in login!!");
+    var returnFnName = "handleDirectorySelected";
+    javafx.openSimpleFileDialog(returnFnName);
+  }
+
+  function handleDirectorySelected(chosenPath) {
+    console.log("directorySelectedHandler!");
+    var chosenDataDir = document.getElementById("chosenDataDir");
+    console.log("chosenPath:" +  chosenPath);
+    if (chosenPath !== null && chosenPath !== undefined) {
+      var chosenDataDir = document.getElementById("customFileLabel");
+      var chosenDataInput = document.getElementById("customFile");
+
+      if (chosenDataDir !== null && chosenDataDir !== undefined) {
+        chosenDataDir.textContent = chosenPath;
+        document.getElementById("localDataDirContinueButton").disabled = false;
+        chosenDataInput.value = chosenPath;
+      }
+    }
+  }
+</script>
+</th:block>
+</html>

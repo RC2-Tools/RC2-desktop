@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        @page {
+            background-color: white;
+            size: letter landscape;
+            margin: 0.5in;
+            font-size: 10pt;
+            font-family: sans-serif;
+
+            @bottom-left {
+                content: "RC2 Relief Tool Report";
+
+                font-size: 8pt;
+                border-top: .25pt solid #DC281E;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+
+                font-size: 8pt;
+                border-top: .25pt solid #DC281E;
+            }
+
+            @top-center {
+                font-size: 8pt;
+            }
+
+            @top-left {
+                content: "Date: {{_metadata.date}}\A" "Caseworker: {{_customData.caseworker}}";
+                font-size: 8pt;
+                white-space: pre;
+            }
+        }
+
+        body {
+            background: white;
+            padding: 0;
+            margin: 0;
+        }
+    </style>
+
+    <script id="reportGenerateData">
+        'use strict';
+
+        function findTotal(toFind) {
+          toFind.total = 0;
+
+          for (let key of ['a', 'gb', 'np', 'el', 'other']) {
+            toFind.total += toFind[key];
+          }
+        }
+
+        let numHouseholdsAppointment = {
+            a: 0,
+            gb: 0,
+            np: 0,
+            el: 0,
+            other: 0
+        }
+
+        let numAdultsAppointment = {
+            a: 0,
+            gb: 0,
+            np: 0,
+            el: 0,
+            other: 0
+        }
+
+        let numChildrenAppointment = {
+            a: 0,
+            gb: 0,
+            np: 0,
+            el: 0,
+            other: 0
+        }
+
+        let numVisitsAppointment = {
+            a: 0,
+            gb: 0,
+            np: 0,
+            el: 0,
+            other: 0
+        }
+
+        let numHouseholdsPrior = {
+            a: 0,
+            gb: 0,
+            np: 0,
+            el: 0,
+            other: 0
+        }
+
+        let numAdultsPrior = {
+            a: 0,
+            gb: 0,
+            np: 0,
+            el: 0,
+            other: 0
+        }
+
+        let numChildrenPrior = {
+            a: 0,
+            gb: 0,
+            np: 0,
+            el: 0,
+            other: 0
+        }
+
+        let numVisitsPrior = {
+            a: 0,
+            gb: 0,
+            np: 0,
+            el: 0,
+            other: 0
+        }
+
+        let validLocations = ['a', 'gb', 'np', 'el'];
+
+        let beneficiaryEntities = window.reportData.recovery_intake || [];
+        for (let beneficiary of beneficiaryEntities) {
+          let appointmentLoc = beneficiary.loc_interview;
+          let priorIsland = beneficiary.island;
+
+          if (!validLocations.includes(appointmentLoc)) {
+            appointmentLoc = 'other';
+          }
+
+          if (!validLocations.includes(priorIsland)) {
+            priorIsland = 'other';
+          }
+
+          numHouseholdsAppointment[appointmentLoc]++;
+          numHouseholdsPrior[priorIsland]++;
+        }
+
+        let members = window.reportData.members;
+        for (let member of members) {
+          let appointmentLoc = member.recovery_intake_loc_interview;
+          let priorIsland = member.recovery_intake_island;
+          let isAdult = member.recovery_intake_members_is_adult === 'yes';
+
+          if (!validLocations.includes(appointmentLoc)) {
+            appointmentLoc = 'other';
+          }
+
+          if (!validLocations.includes(priorIsland)) {
+            priorIsland = 'other';
+          }
+
+          if (isAdult) {
+            numAdultsAppointment[appointmentLoc]++;
+            numAdultsPrior[priorIsland]++;
+          } else {
+            numChildrenAppointment[appointmentLoc]++;
+            numChildrenPrior[priorIsland]++;
+          }
+
+          for (let [k, v] of Object.entries(member)) {
+            if (k.endsWith('_custom_visit_row_id') && v !== null && v !== '') {
+              numVisitsAppointment[appointmentLoc]++;
+              numVisitsPrior[priorIsland]++;
+            }
+          }
+        }
+
+        findTotal(numHouseholdsAppointment);
+        findTotal(numAdultsAppointment);
+        findTotal(numChildrenAppointment);
+        findTotal(numVisitsAppointment);
+
+        findTotal(numHouseholdsPrior);
+        findTotal(numAdultsPrior);
+        findTotal(numChildrenPrior);
+        findTotal(numVisitsPrior);
+
+        let caseworker = '';
+        for (let qual of window.reportData._criteria) {
+          for (let cond of qual) {
+            if (cond['field']['tableId'] === 'recovery_intake' && cond['field']['column'] === 'interviewer_name') {
+              caseworker = cond['value'];
+            }
+          }
+        }
+
+        (function () {
+            return {
+                numHouseholdsAppointment: numHouseholdsAppointment,
+                numAdultsAppointment: numAdultsAppointment,
+                numChildrenAppointment: numChildrenAppointment,
+                numVisitsAppointment: numVisitsAppointment,
+
+                numHouseholdsPrior: numHouseholdsPrior,
+                numAdultsPrior: numAdultsPrior,
+                numChildrenPrior: numChildrenPrior,
+                numVisitsPrior: numVisitsPrior,
+
+                caseworker: caseworker
+            };
+        })();
+    </script>
+</head>
+
+<body>
+<table>
+    <thead>
+    <tr>
+        <th></th>
+        <th colspan="100">Appointment Location</th>
+    </tr>
+    <tr>
+        <th></th>
+        <th>Abaco</th>
+        <th>Grand Bahama</th>
+        <th>New Providence</th>
+        <th>Eluethera</th>
+        <th>Others</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <th scope="row">Number of Households</th>
+        <td>{{_customData.numHouseholdsAppointment.a}}</td>
+        <td>{{_customData.numHouseholdsAppointment.gb}}</td>
+        <td>{{_customData.numHouseholdsAppointment.np}}</td>
+        <td>{{_customData.numHouseholdsAppointment.el}}</td>
+        <td>{{_customData.numHouseholdsAppointment.other}}</td>
+        <td>{{_customData.numHouseholdsAppointment.total}}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Number of adults registered</th>
+        <td>{{_customData.numAdultsAppointment.a}}</td>
+        <td>{{_customData.numAdultsAppointment.gb}}</td>
+        <td>{{_customData.numAdultsAppointment.np}}</td>
+        <td>{{_customData.numAdultsAppointment.el}}</td>
+        <td>{{_customData.numAdultsAppointment.other}}</td>
+        <td>{{_customData.numAdultsAppointment.total}}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Number of children registered</th>
+        <td>{{_customData.numChildrenAppointment.a}}</td>
+        <td>{{_customData.numChildrenAppointment.gb}}</td>
+        <td>{{_customData.numChildrenAppointment.np}}</td>
+        <td>{{_customData.numChildrenAppointment.el}}</td>
+        <td>{{_customData.numChildrenAppointment.other}}</td>
+        <td>{{_customData.numChildrenAppointment.total}}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Number of Visits</th>
+        <td>{{_customData.numVisitsAppointment.a}}</td>
+        <td>{{_customData.numVisitsAppointment.gb}}</td>
+        <td>{{_customData.numVisitsAppointment.np}}</td>
+        <td>{{_customData.numVisitsAppointment.el}}</td>
+        <td>{{_customData.numVisitsAppointment.other}}</td>
+        <td>{{_customData.numVisitsAppointment.total}}</td>
+    </tr>
+    </tbody>
+</table>
+
+<table>
+    <thead>
+    <tr>
+        <th></th>
+        <th colspan="100">Prior Island</th>
+    </tr>
+    <tr>
+        <th></th>
+        <th>Abaco</th>
+        <th>Grand Bahama</th>
+        <th>New Providence</th>
+        <th>Eluethera</th>
+        <th>Others</th>
+        <th>Total</th>
+    </tr>
+    </thead>
+
+    <tbody>
+    <tr>
+        <th scope="row">Number of Households</th>
+        <td>{{_customData.numHouseholdsPrior.a}}</td>
+        <td>{{_customData.numHouseholdsPrior.gb}}</td>
+        <td>{{_customData.numHouseholdsPrior.np}}</td>
+        <td>{{_customData.numHouseholdsPrior.el}}</td>
+        <td>{{_customData.numHouseholdsPrior.other}}</td>
+        <td>{{_customData.numHouseholdsPrior.total}}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Number of adults registered</th>
+        <td>{{_customData.numAdultsPrior.a}}</td>
+        <td>{{_customData.numAdultsPrior.gb}}</td>
+        <td>{{_customData.numAdultsPrior.np}}</td>
+        <td>{{_customData.numAdultsPrior.el}}</td>
+        <td>{{_customData.numAdultsPrior.other}}</td>
+        <td>{{_customData.numAdultsPrior.total}}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Number of children registered</th>
+        <td>{{_customData.numChildrenPrior.a}}</td>
+        <td>{{_customData.numChildrenPrior.gb}}</td>
+        <td>{{_customData.numChildrenPrior.np}}</td>
+        <td>{{_customData.numChildrenPrior.el}}</td>
+        <td>{{_customData.numChildrenPrior.other}}</td>
+        <td>{{_customData.numChildrenPrior.total}}</td>
+    </tr>
+
+    <tr>
+        <th scope="row">Number of Visits</th>
+        <td>{{_customData.numVisitsPrior.a}}</td>
+        <td>{{_customData.numVisitsPrior.gb}}</td>
+        <td>{{_customData.numVisitsPrior.np}}</td>
+        <td>{{_customData.numVisitsPrior.el}}</td>
+        <td>{{_customData.numVisitsPrior.other}}</td>
+        <td>{{_customData.numVisitsPrior.total}}</td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

@@ -1,0 +1,35 @@
+.vouchers {
+    width: 100%;
+}
+
+.voucher {
+    width: 45%;
+    height: 6cm;
+    display: inline-block;
+    border: solid black 1px;
+    margin: 1%;
+    padding: 1%;
+}
+
+.voucher-text {
+    text-align: center;
+    font-size: x-large;
+    margin: 0 auto;
+}
+
+.voucher-barcode {
+    text-align: center;
+    width: inherit;
+    height: 5cm;
+    margin: 0 auto;
+}
+
+.voucher-barcode img {
+    width: auto;
+    height: 50%;
+}
+
+.red-cross-logo {
+    width: 50%;
+    height: 25%;
+}

@@ -1,0 +1,234 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <style>
+        @page {
+            background-color: white;
+            size: letter portrait;
+            margin: 0.5in;
+            font-size: 10pt;
+            font-family: sans-serif;
+
+            @bottom-left {
+                content: "RC2 Relief Tool Report";
+
+                font-size: 8pt;
+                border-top: .25pt solid #DC281E;
+            }
+
+            @bottom-right {
+                content: "Page " counter(page) " of " counter(pages);
+
+                font-size: 8pt;
+                border-top: .25pt solid #DC281E;
+            }
+
+            @top-center {
+                font-size: 8pt;
+            }
+        }
+
+        @page :first {
+            @bottom-right {
+                content: normal;
+            }
+
+            @bottom-left {
+                content: normal;
+            }
+        }
+
+        @page overview {
+            @top-center {
+                content: "Overview";
+
+                font-size: 8pt;
+            }
+        }
+
+        @page authorization-summaries {
+            @top-center {
+                content: "Authorization Summaries";
+
+                font-size: 8pt;
+            }
+        }
+
+        @page deliveries {
+            @top-center {
+                content: "Deliveries";
+
+                font-size: 8pt;
+            }
+        }
+
+        body {
+            background: white;
+            padding: 0;
+            margin: 0;
+        }
+
+        h2 {
+            page-break-before: always;
+        }
+
+        h3 {
+            font-weight: normal;
+            /*font-family: sans-serif;*/
+        }
+
+        .front-cover {
+            text-align: center;
+            font-weight: bold;
+            font-size: 22pt;
+            margin-top: 3in;
+        }
+
+        .overview {
+            page: overview;
+        }
+
+        .distribution-summaries {
+            page: authorization-summaries
+        }
+
+        .deliveries {
+            page: deliveries
+        }
+
+        .individual-picture {
+            text-align: center;
+            margin: 0 auto;
+            width: 1in;
+            height: 1in;
+        }
+
+        .individual-picture img {
+            width: auto;
+            height: 100%;
+        }
+
+        #front-cover-datetime {
+            font-weight: normal;
+            font-size: 12pt;
+        }
+
+        ul {
+            margin: 0;
+            padding: 0;
+        }
+
+        ul li {
+            position: relative;
+            padding: 8px 8px 8px 40px;
+            background: #eee;
+        }
+
+        ul li:nth-child(odd) {
+            background: #f9f9f9;
+        }
+
+    </style>
+</head>
+
+<body>
+
+<div class="front-cover" id="front-cover">
+    <h1>RC2 Relief Tool Report</h1>
+    <h3>{{authorizations.columns.name}}</h3>
+    <div id="front-cover-datetime">
+        <p>{{_metadata.date}}</p>
+        <p>{{_metadata.time}}</p>
+    </div>
+</div>
+
+<div class="overview" id="overview">
+    <h2>Overview</h2>
+    <div>
+    </div>
+    <div>
+        <ul id="overview_list">
+            {{#deliveries.size}}<li>Total Deliveries: {{deliveries.size}}</li>{{/deliveries.size}}
+            {{^deliveries.size}}<li>Total Deliveries: 0</li>{{/deliveries.size}}
+            <li>Generated Entitlements: {{#_filter.generated}}entitlements{{/_filter.generated}}</li>
+            <li>Override Entitlements: {{#_filter.overrides}}entitlements{{/_filter.overrides}}</li>
+            <li>Deliveries from generated entitlements: {{#_filter.generated}}deliveries{{/_filter.generated}}</li>
+            <li>Deliveries from override entitlements: {{#_filter.overrides}}deliveries{{/_filter.overrides}}</li>
+        </ul>
+    </div>
+</div>
+
+{{#distribution_reports.size}}
+<div class="distribution-summaries" id="distribution-summaries">
+    <h2>Distribution Summaries</h2>
+    <ul>
+
+    {{#_wrapped.ex_field_report_form}}
+        <li id="{{rowId}}">
+            <h3>Version: {{columns.report_version}}</h3>
+            <h3>Time of Entry: {{parsed_date_created}}</h3>
+            <h3>Notes: {{columns.notes}}</h3>
+            <div class="individual-picture">
+                <img src="{{#attachment}}receive_signature{{/attachment}}">
+            </div>
+        </li>
+    {{/_wrapped.ex_field_report_form}}
+
+    {{^ex_field_report_form}}
+        {{#distribution_reports}}
+        <li id="{{rowId}}">
+            <h3>Version {{columns.report_version}}</h3>
+        </li>
+        {{/distribution_reports}}
+    {{/ex_field_report_form}}
+
+    </ul>
+</div>
+{{/distribution_reports.size}}
+
+
+{{#deliveries.size}}
+<div class="deliveries" id="deliveries">
+    <h2>Deliveries</h2>
+    <ul id="deliveries_list">
+
+
+    {{#_wrapped.ex_ctp_delivery_form}}
+        <li id="{{rowId}}">
+        <h3>
+            Beneficiary Entity ID: {{columns.beneficiary_entity_id}}
+        </h3>
+        <h3>
+            Time of Delivery: {{parsed_date_created}}
+        </h3>
+        <h3>
+            Extra Field Entitlement: {{columns.is_override}}
+        </h3>
+        <div class="individual-picture">
+            <img src="{{#attachment}}receive_signature{{/attachment}}">
+        </div>
+        </li>
+    {{/_wrapped.ex_ctp_delivery_form}}
+
+    {{^_wrapped.ex_ctp_delivery_form}}
+    {{#_wrapped.deliveries}}
+        <li id="{{rowId}}">
+        <h3>
+            Beneficiary Entity ID: {{columns.beneficiary_entity_id}}
+        </h3>
+        <h3>
+            Time of Delivery: {{parsed_date_created}}
+        </h3>
+        <h3>
+            Extra Field Entitlement: {{columns.is_override}}
+        </h3>
+        </li>
+    {{/_wrapped.deliveries}}
+    {{/_wrapped.ex_ctp_delivery_form}}
+
+    </ul>
+</div>
+{{/deliveries.size}}
+</body>
+</html>
