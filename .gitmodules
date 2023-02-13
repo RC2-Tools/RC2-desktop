@@ -1,5 +1,5 @@
 [submodule "app-designer"]
 	path = app-designer
-url=../RC2-app-designer.git
-	branch = main
+url=https://github.com/RC2-Tools/RC2-app-designer.git
+	branch = master
 	update = checkout
