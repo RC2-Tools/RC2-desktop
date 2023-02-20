@@ -1,4 +1,8 @@
-# RC2 Modules
+# RC2 Desktop Modules
+
+## Dependencies
+- Maven 3.6 or higher
+- Java 1.8 JDK
 
 ## Build
 Run `mvn clean install`
