@@ -4,11 +4,11 @@
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
- *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- *  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *  Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ *  *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *   THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
 
@@ -25,6 +25,18 @@ import edu.uw.cse.ifrcdemo.sharedlib.suitcase.SuitcaseCliArgsBuilder;
 import edu.uw.cse.ifrcdemo.sharedlib.util.FileUtil;
 import edu.uw.cse.ifrcdemo.sharedlib.util.OdkPathUtil;
 import edu.uw.cse.ifrcdemo.translations.LogStr;
+import org.apache.wink.json4j.JSONException;
+import org.apache.wink.json4j.JSONObject;
+import org.opendatakit.aggregate.odktables.rest.entity.PrivilegesInfo;
+import org.opendatakit.aggregate.odktables.rest.entity.TableResource;
+import org.opendatakit.aggregate.odktables.rest.entity.TableResourceList;
+import org.opendatakit.suitcase.model.CloudEndpointInfo;
+import org.opendatakit.suitcase.ui.DialogUtils;
+import org.opendatakit.suitcase.ui.SuitcaseCLI;
+import org.opendatakit.suitcase.utils.FieldsValidatorUtils;
+import org.opendatakit.sync.client.FileUtils;
+import org.opendatakit.sync.client.SyncClient;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.UncheckedIOException;
@@ -42,17 +54,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.zip.DataFormatException;
-import org.apache.wink.json4j.JSONException;
-import org.apache.wink.json4j.JSONObject;
-import org.opendatakit.aggregate.odktables.rest.entity.PrivilegesInfo;
-import org.opendatakit.aggregate.odktables.rest.entity.TableResource;
-import org.opendatakit.aggregate.odktables.rest.entity.TableResourceList;
-import org.opendatakit.suitcase.model.CloudEndpointInfo;
-import org.opendatakit.suitcase.ui.DialogUtils;
-import org.opendatakit.suitcase.ui.SuitcaseCLI;
-import org.opendatakit.suitcase.utils.FieldsValidatorUtils;
-import org.opendatakit.sync.client.FileUtils;
-import org.opendatakit.sync.client.SyncClient;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
 import static org.opendatakit.suitcase.net.SuitcaseSwingWorker.okCode;
@@ -93,18 +94,6 @@ public class SuitcaseWrapper {
         // App level assets
         String assetsDir = FileUtils.getAssetsDirPath(getBasePath().toAbsolutePath().toString());
         ArrayList<String> assetsFiles = recurseDir(new File(assetsDir));
-
-        Path reliefAssetsPath = Paths.get(assetsDir).resolveSibling("relief_assets");
-        Path healthAssetsPath = Paths.get(assetsDir).resolveSibling("health_assets");
-
-        if (Files.exists(reliefAssetsPath)) {
-            assetsFiles.addAll(recurseDir(reliefAssetsPath.toFile()));
-        }
-
-        if (Files.exists(healthAssetsPath)) {
-            assetsFiles.addAll(recurseDir(healthAssetsPath.toFile()));
-        }
-
         for (String filePath : assetsFiles) {
             String relativePathOnServer = filePath.substring(getBasePath().toAbsolutePath().toString().length() + 1);
             uploadFile(filePath, relativePathOnServer);
@@ -153,7 +142,7 @@ public class SuitcaseWrapper {
         } else {
             new LoginTask(cloudEndpointInfo, false).blockingExecute();
             UpdateTask updateTask = new UpdateTask(getCloudEndpointInfo(), path, null, tableName,
-                getBasePath().getParent().getParent().toAbsolutePath().toString(), true);
+                getBasePath().getParent().toAbsolutePath().toString(), true);
             int returnCode = updateTask.blockingExecute();
             return returnCode == okCode;
         }
@@ -279,6 +268,7 @@ public class SuitcaseWrapper {
     private void uploadFile(String filePath, String relativePathOnServer) throws IOException {
         getSyncClient().uploadFile(getCloudEndpointInfo().getServerUrl(), getCloudEndpointInfo().getAppId(),
                 filePath, relativePathOnServer, ServerConsts.SYNC_PROTOCOL_VERSION);
+
     }
 
     private void downloadFile(String pathToSaveFile, String relativePathOnServer) throws IOException {

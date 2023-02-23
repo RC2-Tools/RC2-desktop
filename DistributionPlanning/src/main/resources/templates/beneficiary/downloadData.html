@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{DownloadBeneficiaryData})}">
+<body>
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{DownloadBeneficiaryData})}"/>
+
+    <a class="btn btn-lg btn-primary" th:href="@{/beneficiary/downloadData}"
+       th:text="#{DownloadBeneficiaryDatabase}"></a>
+</main>
+
+</body>
+</html>

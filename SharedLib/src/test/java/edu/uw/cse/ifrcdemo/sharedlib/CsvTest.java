@@ -4,11 +4,11 @@
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
- *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- *  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *  Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ *  *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *   THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
 
@@ -20,18 +20,18 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import edu.uw.cse.ifrcdemo.sharedlib.model.config.AuxiliaryProperty;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.AuthorizationType;
-import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.Module;
 import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.RegistrationMode;
 import edu.uw.cse.ifrcdemo.sharedlib.model.row.CsvIndividual;
 import edu.uw.cse.ifrcdemo.sharedlib.model.row.UntypedSyncRow;
 import edu.uw.cse.ifrcdemo.sharedlib.model.stub.Individual;
 import edu.uw.cse.ifrcdemo.sharedlib.util.CsvMapperUtil;
-import java.io.IOException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.ValueSource;
 import org.opendatakit.aggregate.odktables.rest.entity.RowFilterScope;
+
+import java.io.IOException;
 
 public class CsvTest {
   private static final String CSV_PATH = "csv/CsvTest/";
@@ -203,54 +203,27 @@ public class CsvTest {
   }
 
   @Test
-  void tesReliefConfigSerialization() throws JsonProcessingException {
+  void testTablesConfigSerialization() throws JsonProcessingException {
     AuxiliaryProperty config = new AuxiliaryProperty();
 
     String beneficiaryEntityCustomFormId = "beCustomForm";
     String individualCustomFormId = "indCustomForm";
 
-    config.setModule(Module.RELIEF);
     config.setRegistrationMode(RegistrationMode.HOUSEHOLD);
     config.setWorkflowMode(AuthorizationType.REQUIRED_REGISTRATION);
     config.setBeneficiaryEntityCustomFormId(beneficiaryEntityCustomFormId);
     config.setCustomBeneficiaryRowIdColumn("custom_beneficiary_entity_row_id");
 
     Assertions.assertEquals(
-        "{\"MODULE\":\"RELIEF\",\"REGISTRATION_MODE\":\"HOUSEHOLD\",\"WORKFLOW_MODE\":\"REQUIRED_REGISTRATION\",\"BENEFICIARY_ENTITY_CUSTOM_FORM_ID\":\"beCustomForm\",\"MEMBER_CUSTOM_FORM_ID\":null,\"CUSTOM_BENEFICIARY_ROW_ID_COLUMN\":\"custom_beneficiary_entity_row_id\"}",
+        "{\"REGISTRATION_MODE\":\"HOUSEHOLD\",\"WORKFLOW_MODE\":\"REQUIRED_REGISTRATION\",\"BENEFICIARY_ENTITY_CUSTOM_FORM_ID\":\"beCustomForm\",\"MEMBER_CUSTOM_FORM_ID\":null,\"CUSTOM_BENEFICIARY_ROW_ID_COLUMN\":\"custom_beneficiary_entity_row_id\"}",
         new ObjectMapper().writerFor(AuxiliaryProperty.class).writeValueAsString(config)
     );
 
     config.setRegistrationMode(RegistrationMode.INDIVIDUAL);
     config.setMemberCustomFormId(individualCustomFormId);
     Assertions.assertEquals(
-            "{\"MODULE\":\"RELIEF\",\"REGISTRATION_MODE\":\"INDIVIDUAL\",\"WORKFLOW_MODE\":\"REQUIRED_REGISTRATION\",\"BENEFICIARY_ENTITY_CUSTOM_FORM_ID\":\"beCustomForm\",\"MEMBER_CUSTOM_FORM_ID\":\"indCustomForm\",\"CUSTOM_BENEFICIARY_ROW_ID_COLUMN\":\"custom_beneficiary_entity_row_id\"}",
+        "{\"REGISTRATION_MODE\":\"INDIVIDUAL\",\"WORKFLOW_MODE\":\"REQUIRED_REGISTRATION\",\"BENEFICIARY_ENTITY_CUSTOM_FORM_ID\":\"beCustomForm\",\"MEMBER_CUSTOM_FORM_ID\":\"indCustomForm\",\"CUSTOM_BENEFICIARY_ROW_ID_COLUMN\":\"custom_beneficiary_entity_row_id\"}",
         new ObjectMapper().writerFor(AuxiliaryProperty.class).writeValueAsString(config)
-    );
-  }
-
-  @Test
-  void testHealthConfigSerialization() throws JsonProcessingException {
-    AuxiliaryProperty config = new AuxiliaryProperty();
-
-    String beneficiaryEntityCustomFormId = "beCustomForm";
-    String individualCustomFormId = "indCustomForm";
-
-    config.setModule(Module.HEALTH);
-    config.setRegistrationMode(RegistrationMode.HOUSEHOLD);
-    config.setWorkflowMode(AuthorizationType.REQUIRED_REGISTRATION);
-    config.setBeneficiaryEntityCustomFormId(beneficiaryEntityCustomFormId);
-    config.setCustomBeneficiaryRowIdColumn("custom_beneficiary_entity_row_id");
-
-    Assertions.assertEquals(
-            "{\"MODULE\":\"HEALTH\",\"REGISTRATION_MODE\":\"HOUSEHOLD\",\"WORKFLOW_MODE\":\"REQUIRED_REGISTRATION\",\"BENEFICIARY_ENTITY_CUSTOM_FORM_ID\":\"beCustomForm\",\"MEMBER_CUSTOM_FORM_ID\":null,\"CUSTOM_BENEFICIARY_ROW_ID_COLUMN\":\"custom_beneficiary_entity_row_id\"}",
-            new ObjectMapper().writerFor(AuxiliaryProperty.class).writeValueAsString(config)
-    );
-
-    config.setRegistrationMode(RegistrationMode.INDIVIDUAL);
-    config.setMemberCustomFormId(individualCustomFormId);
-    Assertions.assertEquals(
-            "{\"MODULE\":\"HEALTH\",\"REGISTRATION_MODE\":\"INDIVIDUAL\",\"WORKFLOW_MODE\":\"REQUIRED_REGISTRATION\",\"BENEFICIARY_ENTITY_CUSTOM_FORM_ID\":\"beCustomForm\",\"MEMBER_CUSTOM_FORM_ID\":\"indCustomForm\",\"CUSTOM_BENEFICIARY_ROW_ID_COLUMN\":\"custom_beneficiary_entity_row_id\"}",
-            new ObjectMapper().writerFor(AuxiliaryProperty.class).writeValueAsString(config)
     );
   }
 }

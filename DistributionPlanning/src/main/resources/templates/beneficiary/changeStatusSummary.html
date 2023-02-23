@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{EnableDisableBeneficiarySummary})}">
+<body>
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{EnableDisableBeneficiaries})}"/>
+
+    <form method="post" class="col-12" th:object="${beneficiaryFormModel}">
+        <div class="table-responsive">
+            <table class="table table-striped table-sm">
+                <thead>
+                <tr>
+                    <th th:text="#{FirstName}"></th>
+                    <th th:text="#{LastName}"></th>
+                    <th th:text="#{RedCrossId}"></th>
+                    <th th:text="#{DOB}"></th>
+                    <th th:text="#{EnableDisable}"></th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:each="beneficiary:*{beneficiaries}">
+                    <td th:text="${beneficiary.firstName}"></td>
+                    <td th:text="${beneficiary.lastName}"></td>
+                    <td th:text="${beneficiary.rcId}"></td>
+                    <td th:text="${#dates.format(beneficiary.dateOfBirth, 'dd-MMM-yyyy')}"></td>
+                    <td th:text="${beneficiary.status} ? #{Enabled} : #{Disabled}"></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-lg" th:text="#{DoneLabel}"></button>
+    </form>
+
+</main>
+</body>
+</html>

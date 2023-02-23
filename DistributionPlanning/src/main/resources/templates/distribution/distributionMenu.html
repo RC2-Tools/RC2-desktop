@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{Distribution})}">
+<main role="main" class="container">
+    <div th:replace="~{fragments/menu :: heading(#{Distribution})}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        ${#mvc.url('DC#newDistribution').build()}, #{CreateDistribution}, @{/img/create_distribution_delivery_report_icon.svg}, #{CreateDistributionTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        ${#mvc.url('DC#viewDistList').build()}, #{ViewDistributions}, @{/img/view_visit_prog_dist_icon.svg}, #{ViewDistributionsTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        ${#mvc.url('RTC#viewDistTemplates').build()}, #{ViewDistributionTemplates}, @{/img/view_templ_icon.svg}, #{ViewDistributionTemplatesTT}, false)}"></div>
+</main>
+</html>

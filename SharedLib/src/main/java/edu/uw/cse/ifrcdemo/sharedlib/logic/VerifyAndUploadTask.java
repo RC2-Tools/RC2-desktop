@@ -4,11 +4,11 @@
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
- *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- *  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *  Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ *  *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *   THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
 
@@ -17,10 +17,7 @@ package edu.uw.cse.ifrcdemo.sharedlib.logic;
 import edu.uw.cse.ifrcdemo.sharedlib.consts.FileConsts;
 import edu.uw.cse.ifrcdemo.sharedlib.consts.GenConsts;
 import edu.uw.cse.ifrcdemo.sharedlib.consts.ToolPropertiesConsts;
-import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.Module;
-import edu.uw.cse.ifrcdemo.sharedlib.model.db.HealthMobileDbModel;
 import edu.uw.cse.ifrcdemo.sharedlib.model.db.MobileDbModel;
-import edu.uw.cse.ifrcdemo.sharedlib.model.db.ReliefMobileDbModel;
 import edu.uw.cse.ifrcdemo.sharedlib.model.row.BaseSyncRow;
 import edu.uw.cse.ifrcdemo.sharedlib.model.row.CsvAuthorization;
 import edu.uw.cse.ifrcdemo.sharedlib.model.row.CsvEntitlement;
@@ -28,6 +25,13 @@ import edu.uw.cse.ifrcdemo.sharedlib.net.SuitcaseWrapper;
 import edu.uw.cse.ifrcdemo.sharedlib.util.DialogUtil;
 import edu.uw.cse.ifrcdemo.translations.TranslationConsts;
 import edu.uw.cse.ifrcdemo.translations.TranslationUtil;
+import org.apache.wink.json4j.JSONException;
+import org.opendatakit.suitcase.model.CloudEndpointInfo;
+import org.opendatakit.suitcase.net.SuitcaseSwingWorker;
+import org.opendatakit.suitcase.ui.ProgressBarStatus;
+import org.opendatakit.suitcase.ui.SuitcaseProgressBar;
+import org.opendatakit.sync.client.SyncClient;
+
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -41,12 +45,6 @@ import java.util.Properties;
 import java.util.ResourceBundle;
 import java.util.concurrent.ExecutionException;
 import java.util.zip.DataFormatException;
-import org.apache.wink.json4j.JSONException;
-import org.opendatakit.suitcase.model.CloudEndpointInfo;
-import org.opendatakit.suitcase.net.SuitcaseSwingWorker;
-import org.opendatakit.suitcase.ui.ProgressBarStatus;
-import org.opendatakit.suitcase.ui.SuitcaseProgressBar;
-import org.opendatakit.sync.client.SyncClient;
 
 public class VerifyAndUploadTask extends SuitcaseSwingWorker<Void> {
 
@@ -64,15 +62,13 @@ public class VerifyAndUploadTask extends SuitcaseSwingWorker<Void> {
         requiredUploadCSVs = Collections.unmodifiableList(list);
     }
 
-    private final CloudEndpointInfo cloudEndpointInfo;
-    private final Path savePath;
-    private final Module moduleType;
+    private CloudEndpointInfo cloudEndpointInfo;
+    private Path savePath;
 
-    public VerifyAndUploadTask(CloudEndpointInfo cloudEndpointInfo, Path savePath, Module moduleType) {
+    public VerifyAndUploadTask(CloudEndpointInfo cloudEndpointInfo, Path savePath) {
         super();
         this.cloudEndpointInfo = cloudEndpointInfo;
         this.savePath = savePath;
-        this.moduleType = moduleType;
     }
 
     @Override
@@ -104,15 +100,7 @@ public class VerifyAndUploadTask extends SuitcaseSwingWorker<Void> {
 
         publish(new ProgressBarStatus(20, translations.getString(TranslationConsts.BEGIN_VERIFICATION_MSG), false));
 
-        MobileDbModel model;
-
-        if(moduleType == Module.RELIEF) {
-            model = new ReliefMobileDbModel(savePath, requiredUploadCSVs);
-        } else if (moduleType == Module.HEALTH) {
-            model = new HealthMobileDbModel(savePath, requiredUploadCSVs);
-        } else {
-            throw new IllegalArgumentException("RC2 module undefined for VerifyAndUploadTask");
-        }
+        MobileDbModel model = new MobileDbModel(savePath, requiredUploadCSVs);
 
         // Validate the tables to make sure hand editing hasn't created invalid CSVs
         Validator validator = new Validator(model);

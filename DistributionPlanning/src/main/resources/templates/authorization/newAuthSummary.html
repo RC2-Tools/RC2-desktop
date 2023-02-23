@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: createDistNVisitLayout (~{::main}, #{DistributionCreator})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{DistributionCreator})}"/>
+    <th:block th:insert="~{fragments/sectionNavigation :: distribution('auth')}"/>
+
+    <th:block th:insert="~{authorization/newAuthBackground :: background}"/>
+    <th:block th:insert="~{fragments/pseudoModal :: modal(~{::modalHeader}, ~{::modalContent}, ~{::modalFooter})}"/>
+</main>
+
+<th:block th:fragment="modalHeader">
+    <th:block th:insert="~{authorization/newAuthTitle :: title(|#{ItemSummary} — ${newAuthForm.itemName}|)}"/>
+    <th:block th:insert="~{fragments/sectionNavigation :: authorization('authSummary')}"/>
+</th:block>
+
+<div class="row" th:fragment="modalContent"
+     th:insert="~{fragments/directiveSummary :: authSummary(${newAuthForm}, ${newAuthForm.demographicsModel})}"></div>
+
+<div class="row" th:fragment="modalFooter">
+    <button type="button" class="btn btn-secondary btn-lg" th:text="#{BackBtnTxt}"
+            onclick="window.history.go(-1);"></button>
+    <form method="post">
+        <button type="submit" class="btn btn-primary btn-lg" th:text="#{ContinueLabel}"></button>
+    </form>
+</div>
+</html>

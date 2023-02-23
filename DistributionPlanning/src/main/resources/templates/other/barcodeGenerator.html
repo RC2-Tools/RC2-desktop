@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{BarcodeGeneratorTitle})}">
+<body>
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{BarcodeGeneratorTitle})}"/>
+
+    <div class="row">
+        <form method="post" class="col-12" th:object="${barcodeFormModel}">
+            <div class="form-group row">
+                <label for="barcodeText" class="col-2 col-form-label"
+                       th:text="#{TextLabel}"></label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="barcodeText"
+                           th:errorclass="is-invalid"
+                           th:insert="~{fragments/feedback :: msg('barcodeFormModel.text')}"
+                           th:placeholder="#{TextLabel}" th:field="*{text}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="barcodeRangeStart" class="col-2 col-form-label"
+                       th:text="#{StartBarcodeRangeLabel}"></label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="barcodeRangeStart"
+                           th:errorclass="is-invalid"
+                           th:insert="~{fragments/feedback :: generic}"
+                           th:field="*{rangeStart}"></input>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="barcodeRangeEnd" class="col-2 col-form-label"
+                       th:text="#{EndBarcodeRangeLabel}"></label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="barcodeRangeEnd"
+                           th:errorclass="is-invalid"
+                           th:insert="~{fragments/feedback :: generic}"
+                           th:field="*{rangeEnd}"></input>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" th:text="#{GenBtnLabel}"></button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

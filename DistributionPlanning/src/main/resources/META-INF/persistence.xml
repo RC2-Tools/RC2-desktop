@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.2"
+			 xmlns="http://xmlns.jcp.org/xml/ns/persistence"
+			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+			 xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence
+			 http://xmlns.jcp.org/xml/ns/persistence/persistence_2_2.xsd">
+	<persistence-unit name="DistributionDatabase" transaction-type="RESOURCE_LOCAL">
+		<provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
+        <!-- Entity -->
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.Authorization</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.ItemPack</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.Region</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.Entitlement</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.EnabledEntitlement</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.DisabledEntitlement</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.VisitProgram</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.Distribution</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.entity.RcTemplate</class>
+
+        <!-- Converter -->
+		<class>edu.uw.cse.ifrcdemo.distplan.persistence.InstantConverter</class>
+        <class>edu.uw.cse.ifrcdemo.distplan.persistence.AbsJacksonConverter</class>
+		<class>edu.uw.cse.ifrcdemo.distplan.persistence.RangeListConverter</class>
+        <class>edu.uw.cse.ifrcdemo.distplan.persistence.AuthorizationRuleConverter</class>
+
+		<exclude-unlisted-classes>true</exclude-unlisted-classes>
+		<properties>
+			<property name="javax.persistence.jdbc.driver" value="org.sqlite.JDBC"/>
+			<property name="javax.persistence.jdbc.user" value=""/>
+
+			<property name="hibernate.dialect" value="edu.uw.cse.ifrcdemo.distplan.persistence.Rc2SQLiteDialect" />
+<!--			<property name="hibernate.dialect" value="org.hibernate.dialect.SQLiteDialect" />-->
+			<property name="hibernate.show_sql" value="true"/>
+			<property name="hibernate.flushMode" value="ALWAYS" />
+			<property name="hibernate.cache.use_second_level_cache" value="false" />
+            <property name="hibernate.connection.charSet" value="UTF-8" />
+			<property name="hibernate.jdbc.fetch_size" value="1000"/>
+
+			<!-- create https://docs.jboss.org/hibernate/orm/5.0/manual/en-US/html/ch03.html -->
+			<property name="hibernate.hbm2ddl.auto" value="create-only" />
+		</properties>
+	</persistence-unit>
+</persistence>

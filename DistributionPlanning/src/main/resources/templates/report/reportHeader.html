@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<body>
+
+<div th:fragment="commonReportHeader (title)">
+    <table class="reportHeader">
+        <tr>
+            <th rowspan="3"><img class="reportLogo" th:src="@{/img/report-logo.png}"/></th>
+            <th class="light-gray reportHeaderText" th:text="#{RC2Relief}"></th>
+        </tr>
+        <tr>
+            <th class="light-gray reportHeaderText" th:text="${title}"></th>
+        </tr>
+        <tr>
+            <th class="light-gray reportHeaderText"
+                th:text="${#dates.format(#dates.createNow(), 'dd-MMM-yyyy')}"></th>
+        </tr>
+    </table>
+    <br>
+</div>
+
+</body>
+
+</html>

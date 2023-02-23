@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: loginLayout (~{::page}, #{ChooseProfile})}">
+<th:block th:fragment="page">
+<main role="main" class="container" id="profileDropdown">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ChooseProfile} + '—' + #{LocalDataDirectory})}"/>
+
+    <div class="row">
+        <form method="post" class="col-12" th:object="${loginFormModel}">
+            <div class="form-group">
+                <div class="custom-file" onclick="launchLocalDataFileDialog()">
+                    <input type="hidden" id="dataDirType"
+                           value="LOCAL_DATA_DIRECTORY" name="type">
+                    <input type="text" class="custom-file-input" id="customFile"
+                           th:field="*{inputDataDirectory}" th:errorclass="is-invalid"
+                           th:insert="~{fragments/feedback :: msg('loginFormModel.inputDataDirectory')}">
+                    <label class="custom-file-label" for="customFile"
+                           id="customFileLabel"
+                           th:data-browse="#{Browse}"
+                           th:text="*{inputDataDirectory} ? *{inputDataDirectory} : #{ChooseInputDataDirectory}"></label>
+                </div>
+            </div>
+
+            <button type="submit" id="localDataDirContinueButton"
+                    class="btn btn-primary btn-lg d-flex mx-auto text-center px-5 py-3"
+                    data-target="#pleaseWaitModal" data-toggle="modal"
+                    th:text="#{ContinueLabel}">
+            </button>
+        </form>
+    </div>
+
+    <th:block th:insert="~{login/pleaseWaitModalFragment :: modal}"/>
+</main>
+
+<script>
+  function launchLocalDataFileDialog() {
+    console.log("Clicked file dialog in login!!");
+    var returnFnName = "handleDirectorySelected";
+    javafx.openSimpleFileDialog(returnFnName);
+  }
+
+  function handleDirectorySelected(chosenPath) {
+    console.log("directorySelectedHandler!");
+    var chosenDataDir = document.getElementById("chosenDataDir");
+    console.log("chosenPath:" +  chosenPath);
+    if (chosenPath !== null && chosenPath !== undefined) {
+      var chosenDataDir = document.getElementById("customFileLabel");
+      var chosenDataInput = document.getElementById("customFile");
+
+      if (chosenDataDir !== null && chosenDataDir !== undefined) {
+        chosenDataDir.textContent = chosenPath;
+        document.getElementById("localDataDirContinueButton").disabled = false;
+        chosenDataInput.value = chosenPath;
+      }
+    }
+  }
+</script>
+</th:block>
+</html>

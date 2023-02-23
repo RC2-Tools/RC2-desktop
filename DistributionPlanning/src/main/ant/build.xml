@@ -1,0 +1,30 @@
+<project name="RC2" default="default" basedir="${project.url}" xmlns:fx="javafx:com.sun.javafx.tools.ant">
+	<target name="install">
+		<path id="fxant">
+			<filelist>
+				<file name="${java.home}\..\lib\ant-javafx.jar"/>
+				<file name="${java.home}\lib\ext\jfxrt.jar"/>
+			</filelist>
+			<pathelement location="${basedir}"/>
+		</path>
+		<echo message="${java.home}"/>
+		<echo message="${basedir}"/>
+		<echo message="${rcversion}"/>
+		<taskdef resource="com/sun/javafx/tools/ant/antlib.xml"      
+			uri="javafx:com.sun.javafx.tools.ant"
+			classpathref="fxant"/>
+
+		<fx:deploy width="1024" height="768" outdir="rc2-dist" outfile="installer" nativeBundles="msi" verbose="true">
+			<fx:info title="RC2-Relief" vendor="UW-CSE"/>
+			<fx:application name="RC2-Relief" version="${rcversion}"/>
+			<fx:preferences menu="true" shortcut="true"/>
+			<fx:platform javafx="8+" j2se="8.0">
+				<fx:jvmarg value="-Xmx2048M"/>
+			</fx:platform>
+			<fx:resources>
+				<fx:fileset type="jar" dir="${basedir}/target" includes="*.jar"/>
+				<fx:fileset type="license" dir="${basedir}" includes="license.txt"/>
+			</fx:resources>
+		</fx:deploy>
+  </target>
+ </project>

@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::page}, #{EditHeadingLabel})}">
+<th:block th:fragment="page">
+    <main role="main" class="container">
+        <th:block th:insert="~{fragments/sectionHeading :: headingWithName(#{EditHeadingLabel}, ${editVisitForm.name})}"/>
+
+        <div class="row">
+            <form method="post" class="col-12" id="editVisitFormAuth" th:object="${editVisitForm}">
+                <div class="form-group row">
+                    <label for="editVisitName" class="col-2 col-form-label" th:text="#{NameLabel}"></label>
+                    <div class="col-8">
+                        <input type="text" class="form-control" id="editVisitName"
+                               th:placeholder="#{EnterAName}" th:field="*{name}"
+                               th:errorclass="is-invalid" th:insert="~{fragments/feedback :: msg('editVisitForm.name')}">
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary btn-lg" th:text="#{ContinueLabel}"></button>
+            </form>
+        </div>
+    </main>
+</th:block>
+</html>

@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::page}, 'Data CSV')}">
+<th:block th:fragment="page">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading('Generate CSV')}"/>
+
+    <div class="row">
+        <div class="col-12">
+            <form method="post" th:object="${csvReportFormModel}" id="csvBeneficiaryForm">
+                <div class="form-group row">
+                    <label class="col-2 col-form-label"
+                           for="csvBeneficiaryDistVisitSelect">Distribution or Visit Program</label>
+                    <div class="col-10">
+                        <select class="form-control custom-select" id="csvBeneficiaryDistVisitSelect"
+                                th:field="*{primaryFilter}">
+                            <option value="__all">All Beneficiaries</option>
+
+                            <optgroup th:unless="*{distributionSet.empty}" th:label="#{Distribution}">
+                                <option th:each="dist : *{distributionSet}"
+                                        th:text="${dist.value}"
+                                        th:value="${dist.key}"></option>
+                            </optgroup>
+
+                            <optgroup th:unless="*{visitProgramSet.empty}" label="Visit Program">
+                                <option th:each="vp : *{visitProgramSet}"
+                                        th:text="${vp.value}"
+                                        th:value="${vp.key}"></option>
+                            </optgroup>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="form-group row d-none" id="csvBeneficiaryIncludeUnrealizedRow">
+                    <label class="col-2 form-check-label"
+                           for="csvBeneficiaryIncludeUnrealized">Include Unrealized Beneficiaries</label>
+                    <div class="col-10">
+                        <div class="custom-control custom-checkbox">
+                            <input class="custom-control-input" type="checkbox" id="csvBeneficiaryIncludeUnrealized" th:field="*{includeUnrealized}">
+                            <label class="custom-control-label" for="csvBeneficiaryIncludeUnrealized"></label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <input type="hidden" id="criteriaInput" th:field="*{criteria}">
+
+                    <label class="col-2">Filter</label>
+                    <div class="col-10">
+                        <div class="row">
+                            <div class="col-2"></div>
+                            <div class="col-8 form-row">
+                                <div class="col-3">
+                                    <label for="csvReportCriteriaAttr" th:text="#{SelectAttrLabel}"></label>
+                                </div>
+                                <div class="col-3">
+                                    <label for="csvReportCriteriaComp" th:text="#{SelectComparisonTypeLabel}"></label>
+                                </div>
+                                <div class="col-6">
+                                    <label for="csvReportCriteriaValue" th:text="#{EnterValueLabel}"></label>
+                                </div>
+                            </div>
+                            <div class="col-2"></div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-2 col-form-label" th:text="#{Condition}"></label>
+                            <div class="col form-row">
+                                <div class="col-3">
+                                    <select class="form-control custom-select" id="csvReportCriteriaAttr">
+                                        <optgroup th:each="kv : ${criteriaAttr}" th:label="${kv.key}">
+                                            <option th:each="attr : ${kv.value}"
+                                                    th:text="${#strings.defaultString(
+                                                        #messages.msgOrNull('Criteria.' + attr.column), attr.column)}"
+                                                    th:data-table-id="${attr.tableId}"
+                                                    th:data-column="${attr.column}"></option>
+                                        </optgroup>
+                                    </select>
+                                </div>
+                                <div class="col-3">
+                                    <select class="form-control custom-select" id="csvReportCriteriaComp">
+                                        <option th:each="op : ${criteriaOp}" th:text="${op}" th:value="${op.name()}"></option>
+                                    </select>
+                                </div>
+                                <div class="col-6">
+                                    <input type="text" class="form-control" id="csvReportCriteriaValue">
+                                </div>
+                            </div>
+                            <div class="col-2">
+                                <button type="button" class="btn btn-secondary btn-block" onclick="newCondition()"
+                                        th:text="#{AddCriterionBtnLabel}"></button>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="criteriaList" th:text="#{Qualification}"></label>
+                            <div class="row">
+                                <div class="col-10 tree-list">
+                                    <ul class="bg-light h-100" id="criteriaList"></ul>
+                                </div>
+
+                                <div class="col-2 mx-auto btn-group-vertical btn-block">
+                                    <button type="button" class="btn btn-secondary" onclick="newQualification()"
+                                            th:text="#{FinalizeCaseBtnLabel}"></button>
+                                    <button type="button" class="btn btn-secondary" onclick="removeListItem()"
+                                            th:text="#{ResetCaseBtnTxt}"></button>
+                                    <button type="button" class="btn btn-secondary" onclick="clearAll()"
+                                            th:text="#{ResetAllCasesBtnTxt}"></button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <button class="btn btn-primary btn-lg" id="downloadSubmit" type="submit" th:text="#{Download}"></button>
+                <span class="pl-2 d-none" id="downloadPleaseWait" th:text="#{PleaseWaitMsg}"></span>
+            </form>
+        </div>
+    </div>
+</main>
+<script>
+    'use strict'
+
+    let criteriaCounter = 0;
+
+    document.addEventListener('DOMContentLoaded', evt => {
+      document
+        .getElementById('csvBeneficiaryDistVisitSelect')
+        .addEventListener('change', changeEvt => {
+          if (changeEvt.target.value === '__all') {
+            document.getElementById('csvBeneficiaryIncludeUnrealizedRow').classList.add('d-none');
+          } else {
+            document.getElementById('csvBeneficiaryIncludeUnrealizedRow').classList.remove('d-none');
+          }
+        });
+
+      let submit = document.getElementById('downloadSubmit');
+
+      submit.addEventListener('click', e => {
+        document.getElementById('downloadPleaseWait').classList.remove('d-none');
+      });
+
+      document
+        .getElementById('csvBeneficiaryForm')
+        .addEventListener('submit', e => {
+          submit.disabled = true;
+          return true;
+        });
+    });
+
+    function newQualification() {
+      let criteriaList = document.getElementById('criteriaList');
+
+      let newQual = newListItem('Qualification', 'criteria-qualification');
+      criteriaList.appendChild(newQual);
+
+      updateJson();
+
+      return newQual;
+    }
+
+    function newCondition() {
+      let attr = document.getElementById('csvReportCriteriaAttr').selectedOptions[0];
+      let op = document.getElementById('csvReportCriteriaComp').selectedOptions[0];
+      let val = document.getElementById('csvReportCriteriaValue').value;
+
+      let condList = getSelectedQual().querySelector('ul');
+      let newCond = newListItem(`${attr.innerText} ${op.innerText} ${val}`, 'criteria-condition');
+      newCond.dataset['criteriaAttrTableId'] = attr.dataset['tableId'];
+      newCond.dataset['criteriaAttrColumn'] = attr.dataset['column'];
+      newCond.dataset['criteriaOp'] = op.value;
+      newCond.dataset['criteriaVal'] = val;
+
+      condList.appendChild(newCond);
+
+      updateJson();
+    }
+
+    function removeListItem() {
+      let selectedItem = getSelectedItem();
+      selectedItem.parentElement.remove();
+
+      updateJson();
+    }
+
+    function newListItem(text, itemClass) {
+      // TODO: replace with template
+
+      let item = document.createElement('li');
+      item.classList.add(itemClass);
+
+      let spanNode = document.createElement('span');
+      spanNode.appendChild(document.createTextNode(text));
+      spanNode.onclick = itemOnClick;
+      spanNode.dataset['id'] = criteriaCounter++;
+      item.appendChild(spanNode);
+
+      item.appendChild(document.createElement('ul'));
+
+      return item;
+    }
+
+    function clearAll() {
+      document.getElementById('criteriaList').innerHTML = '';
+
+      updateJson();
+    }
+
+    function itemOnClick(evt) {
+      for (let node of document.querySelectorAll('#criteriaList span')) {
+        node.classList.remove('selected-criteria-item');
+      }
+
+      let targetId = evt.target.dataset['id'];
+      let element = document.querySelector(`#criteriaList span[data-id="${targetId}"]`);
+
+      element.classList.add('selected-criteria-item');
+    }
+
+    function getSelectedItem() {
+      return document.querySelector('#criteriaList .selected-criteria-item');
+    }
+
+    function getSelectedQual() {
+      let searchStart = getSelectedItem();
+
+      while (!!searchStart && !searchStart.classList.contains('criteria-qualification')) {
+        searchStart = searchStart.parentElement;
+      }
+
+      return searchStart;
+    }
+
+    function updateJson() {
+      let criteria = [];
+
+      for (let qual of document.getElementById('criteriaList').children) {
+        let condList = [];
+
+        for (let cond of qual.getElementsByClassName('criteria-condition')) {
+          condList.push({
+            field: {
+              tableId: cond.dataset['criteriaAttrTableId'],
+              column: cond.dataset['criteriaAttrColumn']
+            },
+            operator: cond.dataset['criteriaOp'],
+            value: cond.dataset['criteriaVal']
+          });
+        }
+
+        criteria.push(condList);
+      }
+
+      document.getElementById('criteriaInput').value = JSON.stringify(criteria);
+    }
+</script>
+</th:block>
+</html>

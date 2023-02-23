@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{Visit})}">
+<body>
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{Visit})}"/>
+
+    <a class="btn btn-custom-lg btn-primary" th:href="@{/visit/create}" th:text="#{CreateVisit}"></a>
+    <a class="btn btn-custom-lg btn-primary" th:href="@{/visit/view}" th:text="#{ViewVisits}"></a>
+    <a class="btn btn-custom-lg btn-primary" th:href="@{/visit/template}"
+       th:text="#{ViewVisitTemplates}"></a>
+</main>
+
+</body>
+</html>

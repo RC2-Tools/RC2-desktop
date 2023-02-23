@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org" th:fragment="applyTemplate(action, templates, btnText, tooltipText)">
+<!--/*@thymesVar id="action" type="java.lang.String"*/-->
+<!--/*@thymesVar id="field" type="java.lang.String"*/-->
+<!--/*@thymesVar id="templates" type="java.util.List<edu.uw.cse.ifrcdemo.distplan.entity.RcTemplate>"*/-->
+<!--/*@thymesVar id="template" type="edu.uw.cse.ifrcdemo.distplan.entity.RcTemplate"*/-->
+<form method="post" class="w-100" th:action="${action}">
+    <div class="form-group">
+        <button class="btn btn-secondary" type="button" data-toggle="collapse"
+                data-target="#useTemplate">
+            <th:block th:text="${btnText}"/>
+            <th:block th:if="${tooltipText}" th:insert="~{fragments/tooltip :: tooltip(${tooltipText})}"/>
+        </button>
+    </div>
+    <div class="collapse" id="useTemplate">
+        <div class="card card-body form-group border-primary">
+            <label for="templateSelect" th:text="#{ChooseTemplate}"></label>
+            <div class="input-group">
+                <select class="custom-select" id="templateSelect" th:object="${applyTemplateForm}" th:field="*{templateRowId}">
+                    <!-- TODO: Selected doesn't work -->
+                    <option selected disabled value=""
+                            th:text="#{SelectPlaceholder}"></option>
+
+                    <option th:each="template : ${templates}"
+                            th:value="${template.rowId}" th:text="${template.name}"></option>
+                </select>
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="submit"
+                            th:text="#{ContinueLabel}"></button>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>
+</html>

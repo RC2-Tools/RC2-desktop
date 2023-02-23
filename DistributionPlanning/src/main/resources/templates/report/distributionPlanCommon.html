@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="commonDistPlan">
+    <div th:insert="~{report/reportHeader :: commonReportHeader(#{DistributionPlan})}"></div>
+    <div th:object="${reportDistributionPlanFormModel}">
+        <table class="reportTable">
+            <tr>
+                <th colspan="2" class="dark-gray"
+                    th:text="#{DistributionPlanCaps}"></th>
+            </tr>
+            <tr>
+                <td class="light-gray" th:text="#{DistributionName}"></td>
+                <td th:text="*{distributionName}"></td>
+            </tr>
+            <tr>
+                <td class="light-gray" th:text="#{RegistrationType}"></td>
+                <td th:text="*{workflowMode}"></td>
+            </tr>
+            <tr>
+                <td class="light-gray" th:text="#{BeneficiaryType}"></td>
+                <td th:text="*{registrationMode}"></td>
+            </tr>
+            <tr>
+                <td class="light-gray" th:text="#{RegistrationForm}"></td>
+                <td th:text="*{registrationForm}"></td>
+            </tr>
+            <tr>
+                <td class="light-gray" th:text="#{DistributionForm}"></td>
+                <td th:text="*{distributionForm}"></td>
+            </tr>
+        </table>
+
+        <br>
+
+        <table class="reportTable">
+            <tr class="dark-gray">
+                <th th:text="#{Items}"></th>
+                <th th:text="#{Location}"></th>
+                <th th:text="#{Number}">Number</th>
+            </tr>
+            <tr th:each="reportItemSummary:*{reportItemSummaryList}">
+                <td th:text="${reportItemSummary.name}"></td>
+                <td th:text="*{region}"></td>
+                <td th:text="${reportItemSummary.total}"></td>
+            </tr>
+        </table>
+
+        <br>
+
+        <table class="reportTable">
+            <tr>
+                <th colspan="7" class="dark-gray" th:text="#{TargetedPopulation}"></th>
+            </tr>
+            <tr class="light-gray">
+                <th th:text="#{AgeGender}"></th>
+                <th th:each="ageDist:*{totalAgeDistribution}" th:text="${ageDist.getKey()}"></th>
+            </tr>
+            <tr>
+                <td class="dark-gray" th:text="#{Female}"></td>
+                <td th:each="femaleDist:*{femaleAgeDistribution}"
+                    th:text="${femaleDist.getValue()}"></td>
+            </tr>
+            <tr>
+                <td class="dark-gray" th:text="#{Male}"></td>
+                <td th:each="maleDist:*{maleAgeDistribution}" th:text="${maleDist.getValue()}"></td>
+            </tr>
+
+            <tr class="dark-gray">
+                <td th:text="#{Total}"></td>
+                <td th:each="ageDist:*{totalAgeDistribution}" th:text="${ageDist.getValue()}"></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</html>

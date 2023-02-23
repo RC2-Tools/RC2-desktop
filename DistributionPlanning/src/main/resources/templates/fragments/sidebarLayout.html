@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<th:block th:fragment="sidebarLayout">
+    <ul class="list-unstyled components">
+        <li th:unless="${isNoRegMode}">
+            <a href="#beneficiaryDataSideMenu" data-toggle="collapse" aria-expanded="false"
+               class="dropdown-toggle" th:text="#{BeneficiaryData}"></a>
+            <ul class="collapse list-unstyled" id="beneficiaryDataSideMenu">
+                <li>
+                    <a th:href="@{/beneficiary/changeStatus}" th:text="#{EnableDisableBeneficiaries}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/beneficiary/downloadData}" th:text="#{DownloadBeneficiaryDatabase}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/visit/createVisit}" th:text="#{CreateVisit}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/visit/viewVisits}" th:text="#{ViewVisits}"></a>
+                </li>
+                <li>
+                    <a th:href="${#mvc.url('RTC#viewVisitTemplates').build()}" th:text="#{ViewVisitTemplates}"></a>
+                </li>
+
+            </ul>
+        </li>
+        <li th:unless="${isNoRegMode}">
+            <a href="#distributionSideMenu" data-toggle="collapse" aria-expanded="false"
+               class="dropdown-toggle" th:text="#{Distribution}"></a>
+            <ul class="collapse list-unstyled" id="distributionSideMenu">
+                <li>
+                    <a th:href="${#mvc.url('DC#newDistribution').build()}" th:text="#{CreateDistribution}"></a>
+                </li>
+                <li>
+                    <a th:href="${#mvc.url('DC#viewDistList').build()}" th:text="#{ViewDistributions}"></a>
+                </li>
+                <li>
+                    <a th:href="${#mvc.url('RTC#viewDistTemplates').build()}" th:text="#{ViewDistributionTemplates}"></a>
+                </li>
+
+            </ul>
+        </li>
+        <li th:unless="${isNoRegMode}">
+            <a href="#otherSideMenu" data-toggle="collapse" aria-expanded="false"
+               class="dropdown-toggle" th:text="#{OtherOptions}"></a>
+            <ul class="collapse list-unstyled" id="otherSideMenu">
+                <li>
+                    <a th:href="@{/other/barcodes}" th:text="#{CreateBarcodes}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/location/new/other}" th:text="#{CreateLocations}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/location/view}" th:text="#{ViewLocations}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/item/new/other}" th:text="#{CreateItems}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/item/view}" th:text="#{ViewItems}"></a>
+                </li>
+                <li>
+                    <a th:href="@{/rctemplate/import}" th:text="#{ImportTemplates}"></a>
+                </li>
+            </ul>
+        </li>
+        <li>
+            <a th:href="@{/report}" th:text="#{Reports}"></a>
+        </li>
+        <li th:unless="${isNoRegMode}">
+            <a th:href="@{/export}" th:text="#{ExportSrvBtnLabel}"></a>
+        </li>
+    </ul>
+</th:block>
+</html>

@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{EditHeadingLabel})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: headingWithName(#{EditHeadingLabel}, ${editAuthForm.itemName})}"/>
+
+    <div class="row">
+        <form method="post" class="col-12" id="editDistFormAuth" th:object="${editAuthForm}">
+            <div class="mb-3">
+                <th:block th:insert="~{fragments/barcodeRange::barcodeRange(
+                    'barcodeRange', ${editAuthForm.barcodeRangeList},'editDistFormAuth')}"/>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" th:text="#{ContinueLabel}"></button>
+        </form>
+    </div>
+</main>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: createDistNVisitLayout (~{::page}, #{DistributionCreator})}">
+<th:block th:fragment="page">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{DistributionCreator})}"/>
+    <th:block th:insert="~{fragments/sectionNavigation :: distribution('home')}"/>
+
+    <div class="row">
+        <form method="post" class="w-100" id="newDistBasicForm" th:object="${newDistForm}">
+            <div class="form-group row">
+                <label for="newDistName" class="col-2 col-form-label">
+                    <th:block th:text="#{NameLabel}"/>&nbsp;
+                    <th:block th:insert="~{fragments/tooltip :: tooltip(#{DistributionNameTT})}"/>
+                </label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="newDistName"
+                           th:placeholder="#{EnterAName}" th:field="*{name}"
+                           th:errorclass="is-invalid" th:insert="~{fragments/feedback :: msg('newDistForm.name')}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="newDistDesc" class="col-2 col-form-label" th:text="#{DescriptionLabel}"></label>
+                <div class="col-8">
+                    <textarea class="form-control " id="newDistDesc" rows="5" th:field="*{description}" th:errorclass="is-invalid"></textarea>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-2">
+                    <label class="col-form-label">
+                        <th:block th:text="#{LocationLabel}"/>&nbsp;
+                        <th:block th:insert="~{fragments/tooltip :: tooltip(#{DistributionLocationTT})}"/>
+                    </label>
+                    <small class="form-text text-muted" th:text="#{SelectLocationHint}"></small>
+                </div>
+                <input type="hidden" id="locationInput" th:field="*{locationId}">
+                <div class="col-8">
+                    <table class="table table-light table-sm table-borderless table-hover form-control-table"
+                           tabindex="-1" th:classappend="${#fields.hasErrors('locationId')}? 'is-invalid'">
+                        <thead>
+                        <tr>
+                            <th scope="col" th:text="#{LocationLabel}"></th>
+                            <th scope="col" th:text="#{DescriptionLabel}"></th>
+                        </tr>
+                        </thead>
+                        <tbody id="locationTBody">
+                        <tr th:each="location: ${locList}" th:id="${location.id}"
+                            th:classappend="(${location.id} == *{locationId})? 'selected-tr'" onclick="tableOnclick(this)">
+                            <td th:text="${location.name}"></td>
+                            <td th:text="${location.description}"></td>
+                        </tr>
+                        </tbody>
+                    </table>
+                    <th:block th:insert="~{fragments/feedback :: msg('newDistForm.locationId')}"/>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-sm btn-secondary"
+                            form="newDistBasicForm" formaction="?location"
+                            th:text="#{Add}"></button>
+                </div>
+            </div>
+        </form>
+
+        <th:block th:insert="~{rctemplate/applyTemplate :: applyTemplate(
+            ${#mvc.url('RTC#useDistTemplate').build()},
+            ${distTemplates},
+            #{UseDistributionTemplate},
+            #{ApplyDistributionTemplateTT})}"/>
+
+        <button type="submit" class="btn btn-primary btn-lg" form="newDistBasicForm"
+                th:text="#{ContinueLabel}"></button>
+    </div>
+</main>
+
+<script>
+  function tableOnclick(context) {
+    document.getElementById('locationInput').value = context.id;
+
+    for (let row of document.getElementById('locationTBody').rows) {
+      row.classList.remove('selected-tr');
+    }
+
+    context.classList.add('selected-tr');
+  }
+</script>
+</th:block>
+</html>

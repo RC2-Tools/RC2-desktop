@@ -1,0 +1,7 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<h1 class="display-5" th:fragment="sectionHeading(text)" th:text="${text}"></h1>
+
+<h1 class="display-5" th:fragment="headingWithName(text, name)" th:text="|${text} — ${name}|"></h1>
+</html>

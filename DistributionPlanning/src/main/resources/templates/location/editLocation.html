@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{EditLocation})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{EditLocation})}"/>
+
+    <div class="row">
+        <form method="post" class="col-12" th:object="${editLocationFormModel}">
+            <div class="form-group row">
+                <label for="newLocName" class="col-2 col-form-label"
+                       th:text="#{NameLabel}"></label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="newLocName"
+                           th:placeholder="#{EnterAName}" th:field="*{name}"
+                           th:errorclass="is-invalid" th:insert="~{fragments/feedback :: msg('editLocationFormModel.name')}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="newLocDesc" class="col-2 col-form-label" th:text="#{DescriptionLabel}">
+                </label>
+                <div class="col-10">
+                    <textarea class="form-control" id="newLocDesc" rows="5"
+                              th:field="*{description}"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" th:text="#{Save}"></button>
+        </form>
+    </div>
+</main>
+</html>

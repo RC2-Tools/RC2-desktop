@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{EditItem})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{EditItem})}"/>
+
+    <div class="row">
+        <form method="post" class="col-12" th:object="${editItemFormModel}">
+            <div class="form-group row">
+                <label for="newItemName" class="col-2 col-form-label"
+                       th:text="#{NameLabel}"></label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="newItemName"
+                           th:placeholder="#{EnterAName}" th:field="*{name}"
+                           th:errorclass="is-invalid" th:insert="~{fragments/feedback :: msg('editItemFormModel.name')}">
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label for="newItemDesc" class="col-2 col-form-label" th:text="#{DescriptionLabel}">
+                </label>
+                <div class="col-10">
+                    <textarea class="form-control" id="newItemDesc" rows="5"
+                              th:field="*{description}"></textarea>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" th:text="#{Save}"></button>
+        </form>
+    </div>
+</main>
+</html>

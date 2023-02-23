@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="chooser(form, field, id, display)">
+<div class="custom-file">
+    <input type="file" class="custom-file-input" th:id="${id}" th:form="${form}"
+           th:classappend="${#fields.hasErrors(field)}? 'is-invalid'"
+           onclick="openFileChooser(); return false;">
+    <label class="custom-file-label" th:id="${id} + Label" th:for="${id}" th:data-browse="#{Browse}"
+           th:text="${display}"></label>
+    <th:block th:insert="~{fragments/feedback :: generic}"/>
+
+    <input type="hidden" th:id="${id} + Input" th:form="${form}" th:field="*{__${field}__}">
+</div>
+
+<script th:inline="javascript">
+    'use strict';
+
+    // TODO: this doesn't work for multiple xlsx choosers on the same page
+
+    async function openFileChooser() {
+      let converterSpinner = document.getElementById('xlsxConverterSpinner');
+      let converterSuccess = document.getElementById('xlsxConverterSuccess');
+      let converterFailure = document.getElementById('xlsxConverterFailure');
+
+      let fileChooserId = [[ ${id} ]];
+      let fileChooserLabelId = `${fileChooserId}Label`;
+      let fileChooserInputId = `${fileChooserId}Input`;
+
+      let xlsxPath = javafx.openFileDialogForXlsx();
+
+      if (xlsxPath) {
+        document.getElementById(fileChooserLabelId).innerText = xlsxPath.display;
+        document.getElementById(fileChooserInputId).value = null;
+
+        // clear the prev state
+        converterSuccess.classList.add('d-none');
+        converterFailure.classList.add('d-none');
+        converterSpinner.classList.remove('d-none');
+
+        try {
+          let xlsxGetRes = await fetch('/xlsx/file', {
+            method: 'POST',
+            body: xlsxPath.fullPath
+          });
+
+          if (xlsxGetRes.ok) {
+            let convertedForm = await xlsxGetRes
+              .arrayBuffer()
+              .then(buffer => XLSXConverter.convert(buffer));
+
+            convertedForm['xlsxPath'] = xlsxPath.fullPath;
+
+            let postRes = await postConvertedForm(convertedForm);
+
+            if (!postRes.ok) {
+              let errMsg = await postRes.text();
+
+              console.log(postRes.status);
+              console.log(errMsg);
+
+              converterFailure.classList.remove('d-none');
+              window.javafx.openFxErrorDialog(errMsg);
+            } else {
+              let warnings = convertedForm['warnings'];
+              if (warnings && warnings.length) {
+                window.javafx.openFxWarnDialog(warnings.join('\n'));
+              }
+
+              converterSuccess.classList.remove('d-none');
+              document.getElementById(fileChooserInputId).value = JSON.stringify({
+                'tableId': convertedForm['tableId'],
+                'formId': convertedForm['formId']
+              });
+            }
+          } else {
+            let errMsg = await xlsxGetRes.text();
+
+            console.log(xlsxGetRes.status);
+            console.log(errMsg);
+
+            converterFailure.classList.remove('d-none');
+            window.javafx.openFxErrorDialog(errMsg);
+          }
+        } catch (e) {
+          console.log(e);
+          converterFailure.classList.remove('d-none');
+          window.javafx.openFxErrorDialog(e);
+        }
+      }
+
+      converterSpinner.classList.add('d-none');
+    }
+
+    async function postConvertedForm(convertedForm) {
+      let form = new FormData();
+      Object
+        .entries(convertedForm)
+        .forEach(([key, val]) => form.append(key, val));
+
+      return  fetch('/xlsx/post', {
+        method: 'POST',
+        body: form
+      });
+    }
+</script>
+
+<script th:src="@{/js/converter.js}"></script>
+</th:block>
+
+<th:block th:fragment="indicators">
+
+<div class="spinner-border text-primary d-none" id="xlsxConverterSpinner" role="status"></div>
+<span class="col-form-label d-none" id="xlsxConverterSuccess"><i class="fas fa-fw fa-lg fa-check text-success"></i></span>
+<span class="col-form-label d-none" id="xlsxConverterFailure"><i class="fas fa-fw fa-lg fa-times text-danger"></i></span>
+
+</th:block>
+</html>

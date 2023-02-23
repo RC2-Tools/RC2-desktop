@@ -1,0 +1,11 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div class="invalid-feedback" th:fragment="generic" th:text="#{RequiredField}"></div>
+
+<!--/*@thymesVar id="message" type="java.lang.String"*/-->
+<div class="invalid-feedback" th:fragment="msg(message)">
+    <th:block th:errors="${__${message}__}"/>
+</div>
+</html>

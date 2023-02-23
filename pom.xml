@@ -1,18 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!--
-  ~ Copyright (c) 2016-2022 University of Washington
-  ~ All rights reserved.
-  ~
-  ~ Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
-  ~
-  ~ * Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
-  ~ * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
-  ~ * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
-  ~
-  ~ THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
-  ~
-  -->
-
 <project xmlns="http://maven.apache.org/POM/4.0.0"
          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
@@ -28,16 +14,16 @@
     </parent>
 
     <groupId>edu.uw.cse.ifrcdemo</groupId>
-    <artifactId>RC2ResponseTools</artifactId>
-    <version>1.1.5-PARENTPOM</version>
+    <artifactId>DisasterRelief</artifactId>
+    <version>1.0-PARENTPOM</version>
     <packaging>pom</packaging>
-    <name>RC2ResponseTools</name>
+    <name>DisasterRelief</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.install.skip>true</maven.install.skip>
         <dependencies.directory>${project.basedir}/dependencies</dependencies.directory>
-        <rc2.version>1.2.1</rc2.version>
+        <rc2.version>1.0.19</rc2.version>
 
         <!-- Compile / exec -->
         <java.version>1.8</java.version>
@@ -84,14 +70,13 @@
         <apache.commons-io.version>2.6</apache.commons-io.version>
         <apache.commons-lang3.version>3.6</apache.commons-lang3.version>
         <spullara.mustache.compiler.version>0.9.6</spullara.mustache.compiler.version>
-        <com.openhtmltopdf.version>1.0.6</com.openhtmltopdf.version>
-        <org.jsoup.version>1.13.1</org.jsoup.version>
+        <com.openhtmltopdf.version>1.0.0</com.openhtmltopdf.version>
+        <org.jsoup.version>1.11.3</org.jsoup.version>
         <net.sf.barcode4j.version>2.1</net.sf.barcode4j.version>
         <apache.avalon.framework.version>4.3.1</apache.avalon.framework.version>
         <apache.wink.wink-json4j.version>1.4</apache.wink.wink-json4j.version>
         <org.apache.poi.version>4.1.1</org.apache.poi.version>
         <io.github.soc.directories.version>11</io.github.soc.directories.version>
-        <commons-beanutils.version>1.9.3</commons-beanutils.version>
 
         <!-- Test -->
         <jacoco.version>0.8.2</jacoco.version>
@@ -99,17 +84,16 @@
 
     <modules>
         <module>SharedLib</module>
-        <module>PlanningSharedLib</module>
         <module>XlsxConverterServer</module>
         <module>MustacheToPdf</module>
 		<module>Translations</module>
 		
         <module>Download</module>
-        <module>ReliefPlanning</module>
-		<module>HealthPlanning</module>
+        <module>DistributionPlanning</module>
         <module>Upload</module>
         <module>Report</module>
         <module>Setup</module>
+        <module>ConvertCsv</module>
 
     </modules>
 
@@ -404,17 +388,17 @@
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
-                <artifactId>PlanningSharedLib</artifactId>
-                <version>${rc2.version}</version>
-            </dependency>
-            <dependency>
-                <groupId>${project.groupId}</groupId>
                 <artifactId>XlsxConverterServer</artifactId>
                 <version>${rc2.version}</version>
             </dependency>
             <dependency>
                 <groupId>${project.groupId}</groupId>
                 <artifactId>MustacheToPdf</artifactId>
+                <version>${rc2.version}</version>
+            </dependency>
+            <dependency>
+                <groupId>${project.groupId}</groupId>
+                <artifactId>DistributionPlanningBackend</artifactId>
                 <version>${rc2.version}</version>
             </dependency>
             <dependency>
@@ -508,6 +492,11 @@
              </dependency>
              <dependency>
                  <groupId>com.openhtmltopdf</groupId>
+                 <artifactId>openhtmltopdf-jsoup-dom-converter</artifactId>
+                 <version>${com.openhtmltopdf.version}</version>
+             </dependency>
+             <dependency>
+                 <groupId>com.openhtmltopdf</groupId>
                  <artifactId>openhtmltopdf-slf4j</artifactId>
                  <version>${com.openhtmltopdf.version}</version>
              </dependency>
@@ -589,12 +578,6 @@
                 <groupId>io.github.soc</groupId>
                 <artifactId>directories</artifactId>
                 <version>${io.github.soc.directories.version}</version>
-            </dependency>
-
-            <dependency>
-                <groupId>commons-beanutils</groupId>
-                <artifactId>commons-beanutils</artifactId>
-                <version>${commons-beanutils.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>

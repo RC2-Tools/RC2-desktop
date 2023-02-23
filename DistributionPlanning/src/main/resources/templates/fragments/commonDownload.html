@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="commonDownload">
+    <button type="button" class="btn btn-primary btn-lg" onclick="showReport()"
+            th:text="#{Download}"></button>
+    <script>
+        async function showReport() {
+            let response = await fetch(window.location.href, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                }
+            })
+        }
+    </script>
+</th:block>
+</html>

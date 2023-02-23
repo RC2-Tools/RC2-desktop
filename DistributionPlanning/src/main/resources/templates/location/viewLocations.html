@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{ViewLocations})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ViewLocations})}"/>
+
+    <div class="row">
+        <div class="col-12">
+            <p th:text="#{NoLocationFound}" th:if="${locList.empty}"></p>
+
+            <div class="table-responsive" th:if="${!locList.empty}">
+                <table class="table table-borderless table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="w-50" th:text="#{NameLabel}"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="location : ${locList}">
+                        <td th:text="${location.name}"></td>
+                        <td>
+                            <a class="btn btn-secondary btn-sm"
+                               th:href="${#mvc.url('LC#editLocation').arg(0, location.id).build()}"
+                               th:text="#{EditBtnTxt}"></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</html>

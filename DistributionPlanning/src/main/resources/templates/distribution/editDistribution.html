@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::page}, #{EditHeadingLabel})}">
+<th:block th:fragment="page">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: headingWithName(#{EditHeadingLabel}, ${editDistForm.name})}"/>
+
+    <div class="row">
+        <form method="post" class="col-12" id="editDistFormAuth" th:object="${editDistForm}">
+            <div class="form-group row">
+                <label for="editDistName" class="col-2 col-form-label" th:text="#{NameLabel}"></label>
+                <div class="col-8">
+                    <input type="text" class="form-control" id="editDistName"
+                           th:placeholder="#{EnterAName}" th:field="*{name}"
+                           th:errorclass="is-invalid" th:insert="~{fragments/feedback :: msg('editDistForm.name')}">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="editDistItems" th:text="#{ListOfItemsIncludedInThisDistribution}"></label>
+                <div class="row">
+                    <div class="col-10">
+                        <select class="form-control" id="editDistItems" size="10">
+                            <option th:each="auth : ${editDistForm.authorizations}"
+                                    th:value="${auth.key}" th:text="${auth.value.itemName}"></option>
+                        </select>
+                    </div>
+                    <div class="col-2">
+                        <div class="btn-group-vertical btn-block">
+                            <button type="button" onclick="editAuth()" class="btn btn-secondary"
+                                    th:text="#{EditBtnTxt}"></button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" th:text="#{ContinueLabel}"></button>
+        </form>
+    </div>
+</main>
+
+<script>
+    'use strict';
+
+    function editAuth() {
+      let idToRemove = document
+        .getElementById('editDistItems')
+        .value;
+
+      if (!!idToRemove) {
+        window.location.search = `edit=${idToRemove}`;
+      }
+    }
+</script>
+</th:block>
+</html>

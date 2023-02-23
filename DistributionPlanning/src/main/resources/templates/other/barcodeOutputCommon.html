@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="commonBarcodeOutput">
+    <div class="vouchers" th:object="${barcodeFormModel}">
+        <div class="voucher" th:each="voucher:*{voucherList}">
+            <img class="red-cross-logo" th:src="@{/img/banner.jpg}">
+            <div class="voucher-text">
+                <p th:text="${voucher.text}"></p>
+            </div>
+            <div class="voucher-barcode">
+                <img th:src="${voucher.barcodeDataUri}">
+            </div>
+        </div>
+    </div>
+</div>
+
+</html>

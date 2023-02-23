@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{BeneficiaryData})}">
+<body>
+<main role="main" class="container">
+    <div th:replace="~{fragments/menu :: heading(#{BeneficiaryData})}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/beneficiary/changeStatus}, #{EnableDisableBeneficiaries}, @{/img/enable_disable_beneficiary_icon.svg}, #{EnableDisableBeneficiaryTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/beneficiary/downloadData}, #{DownloadBeneficiaryDatabase}, @{/img/download_beneficiary_list_icon.svg}, #{DownloadBeneficiaryListTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/visit/createVisit}, #{CreateVisit}, @{/img/create_visit_prog_icon.svg}, #{CreateVisitProgramTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/visit/viewVisits}, #{ViewVisits}, @{/img/view_visit_prog_dist_icon.svg}, #{ViewVisitProgramTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        ${#mvc.url('RTC#viewVisitTemplates').build()}, #{ViewVisitTemplates}, @{/img/view_templ_icon.svg}, #{ViewVisitTemplatesTT}, false)}"></div>
+</main>
+
+</body>
+</html>

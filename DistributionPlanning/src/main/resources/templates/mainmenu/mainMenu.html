@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::page}, #{RC2Relief})}">
+<th:block th:fragment="page">
+<main role="main" class="container">
+    <div th:replace="~{fragments/menu :: heading(#{WelcomeToRC2})}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/beneficiary}, #{BeneficiaryData}, @{/img/beneficiary_data_icon.svg}, #{BeneficiaryDataTT}, ${disableButtons || isNoRegMode})}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/distribution}, #{Distributions}, @{/img/distributions_icon.svg}, #{DistributionTT}, ${disableButtons || isNoRegMode})}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/report}, #{Reports}, @{/img/reports_icon.svg}, #{ReportTT}, ${disableButtons})}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/other}, #{OtherOptions}, @{/img/other_options_icon.svg}, #{OtherTT}, ${disableButtons || isNoRegMode})}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/export}, #{ExportSrvBtnLabel}, @{/img/export_to_server_icon.svg}, #{ExportTT}, ${disableButtons || isNoRegMode})}"></div>
+</main>
+</th:block>
+</html>

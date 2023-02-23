@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{OtherOptions})}">
+<body>
+<main role="main" class="container">
+    <div th:replace="~{fragments/menu :: heading(#{OtherOptions})}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/other/barcodes}, #{CreateBarcodes}, @{/img/create_barcodes_icon.svg}, #{CreateBarcodesTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/location/new/other}, #{CreateLocations}, @{/img/create_loc_icon.svg}, #{CreateLocationTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/item/new/other}, #{CreateItems}, @{/img/create_item_icon.svg}, #{CreateItemTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/rctemplate/import}, #{ImportTemplates}, @{/img/import_templ_icon.svg}, #{ImportTemplateTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        ${#mvc.url('DC#viewDistList').build() + '?removed=true'}, #{ArchivedDistributions}, @{/img/archived_dist_icon.svg}, #{ArchivedDistributionsTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/item/view}, #{ViewItems}, @{/img/view_item_icon.svg}, #{ViewItemsTT}, false)}"></div>
+
+    <div th:replace="~{fragments/menu :: item(
+        @{/location/view}, #{ViewLocations}, @{/img/view_loc_icon.svg}, #{ViewLocationsTT}, false)}"></div>
+</main>
+
+</body>
+</html>

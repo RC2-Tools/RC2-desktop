@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: createDistNVisitLayout (~{::main}, #{DistributionCreator})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: headingWithName(#{DistributionCreator}, ${newDistForm.name})}"/>
+    <th:block th:insert="~{fragments/sectionNavigation :: distribution('distSummary')}"/>
+
+    <th:block th:insert="~{distribution/distributionSummaryFragment :: summary(${newDistForm}, ${newDistForm.demographicsModel})}"/>
+
+    <div class="row">
+        <form method="post">
+            <button type="submit" class="btn btn-primary btn-lg" th:text="#{FinalizeBtnTxt}"></button>
+        </form>
+    </div>
+</main>
+</html>

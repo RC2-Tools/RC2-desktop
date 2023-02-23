@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+
+<div th:fragment="commonDistList">
+    <div th:insert="~{report/reportHeader :: commonReportHeader(#{DistributionList})}"></div>
+    <div th:object="${reportDistributionPlanFormModel}">
+        <table class="reportTable">
+            <tr class="dark-gray">
+                <th th:text="#{Location}"></th>
+                <th th:text="#{Date}"></th>
+                <th th:text="#{RedCrossId}"></th>
+                <th th:text="#{FamilySize}"></th>
+                <th th:each="reportItemSummary:*{reportItemSummaryList}"
+                    th:text="${reportItemSummary.name}"></th>
+                <th th:text="#{DistributionCheck}"></th>
+            </tr>
+            <tr th:each="reportEntityItems:*{reportEntityItemsList}">
+                <td class="light-gray" th:text="*{region}"></td>
+                <td class="light-gray"
+                    th:text="${#dates.format(#dates.createNow(), 'dd-MMM-yyyy')}"></td>
+                <td class="light-gray" th:text="${reportEntityItems.rcId}"></td>
+                <td class="light-gray" th:text="${reportEntityItems.familySize}"></td>
+                <td th:each="reportItemSummary:*{reportItemSummaryList}"
+                    th:text="${reportEntityItems.itemMap.get(reportItemSummary.name)}"></td>
+                <td></td>
+            </tr>
+        </table>
+    </div>
+</div>
+
+</html>

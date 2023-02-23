@@ -1,0 +1,9 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="tooltip(message)">
+<span class="d-inline-block" data-toggle="popover" th:data-content="${message}">
+    <i class="fas fa-fw fa-info-circle"></i>
+</span>
+</th:block>
+</html>

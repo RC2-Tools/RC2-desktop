@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<ul class="nav nav-pills nav-justified mb-5" th:fragment="distribution(currPage)">
+    <li class="nav-item">
+        <span class="nav-link" th:classappend="(${currPage} == 'home')? 'active'"
+              th:text="#{Home}"></span>
+    </li>
+
+    <li class="nav-item">
+        <span class="nav-link" th:classappend="(${currPage} == 'auth')? 'active'"
+              th:text="#{Items}"></span>
+    </li>
+
+    <li class="nav-item">
+        <span class="nav-link" th:classappend="(${currPage} == 'distSummary')? 'active'"
+              th:text="#{Summary}"></span>
+    </li>
+</ul>
+
+<ul class="nav nav-pills nav-justified nav-fill w-100 mt-1" th:fragment="authorization(currPage)">
+    <li class="nav-item">
+        <span class="nav-link small" th:classappend="(${currPage} == 'delivery')? 'active'"
+              th:text="#{ItemDelivery}"></span>
+    </li>
+
+    <li class="nav-item">
+        <span class="nav-link small" th:classappend="(${currPage} == 'beneficiary')? 'active'"
+              th:text="#{Beneficiary}"></span>
+    </li>
+
+    <li class="nav-item">
+        <span class="nav-link small" th:classappend="(${currPage} == 'authSummary')? 'active'"
+              th:text="#{ItemSummary}"></span>
+    </li>
+</ul>
+
+<ul class="nav nav-pills nav-justified mb-5" th:fragment="visit(currPage)">
+    <li class="nav-item">
+        <span class="nav-link" th:classappend="(${currPage} == 'home')? 'active'"
+              th:text="#{Home}"></span>
+    </li>
+
+    <li class="nav-item">
+        <span class="nav-link" th:classappend="(${currPage} == 'beneficiary')? 'active'"
+              th:text="#{Beneficiary}"></span>
+    </li>
+
+    <li class="nav-item">
+        <span class="nav-link" th:classappend="(${currPage} == 'summary')? 'active'"
+              th:text="#{Summary}"></span>
+    </li>
+</ul>
+</html>

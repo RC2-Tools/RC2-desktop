@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: createDistNVisitLayout (~{::page}, #{CreateVisit})}">
+<!--TODO: Duplicate code should be cleaned up!!-->
+<th:block th:fragment="page">
+    <main role="main" class="container">
+        <th:block th:insert="~{fragments/sectionHeading :: headingWithName(#{CreateVisit}, ${newVisitForm.name})}"/>
+        <th:block th:insert="~{fragments/sectionNavigation :: visit('summary')}"/>
+
+        <div class="row" th:insert="~{fragments/directiveSummary :: visitProgSummary(${newVisitForm}, ${newVisitForm.demographicsModel})}"></div>
+
+        <div class="row">
+            <form method="post" class="col-12">
+                <button type="submit" class="btn btn-primary btn-lg" th:text="#{ContinueLabel}">
+                </button>
+            </form>
+        </div>
+    </main>
+</th:block>
+</html>

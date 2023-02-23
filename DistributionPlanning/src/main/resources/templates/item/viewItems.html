@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{ViewItems})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ViewItems})}"/>
+
+    <div class="row">
+        <div class="col-12">
+            <p th:text="#{NoItemFound}" th:if="${itemList.empty}"></p>
+
+            <div class="table-responsive" th:if="${!itemList.empty}">
+                <table class="table table-borderless table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="w-50" th:text="#{NameLabel}"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${itemList}">
+                        <td th:text="${item.name}"></td>
+                        <td>
+                            <a class="btn btn-secondary btn-sm"
+                               th:href="${#mvc.url('IC#editItem').arg(0, item.id).build()}"
+                               th:text="#{EditBtnTxt}"></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</html>

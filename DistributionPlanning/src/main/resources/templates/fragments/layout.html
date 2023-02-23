@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:fragment="headerLayout (template, title, header, showSideBarItems, showSyncIcon)"
+      th:lang="${#locale.toLanguageTag()}">
+<!--/*@thymesVar id="title" type="java.lang.String"*/-->
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+
+    <link rel="stylesheet" th:href="@{/bootstrap-4.3.1-dist/css/bootstrap.css}"/>
+    <script defer th:src="@{/fontawesome-free-5.7.2-web/js/all.min.js}"></script>
+
+    <link rel="stylesheet" th:href="@{/css/style.css}"/>
+    <link rel="stylesheet" th:href="@{/css/sidebar.css}"/>
+    <link th:if="${title.startsWith('Reports')}" rel="stylesheet" th:href="@{/css/reportStyle.css}"/>
+    <link th:if="${title.startsWith('Barcode Generator')}" rel="stylesheet"
+          th:href="@{/css/barcodeStyle.css}"/>
+
+    <th:block th:insert="${header}"/>
+
+    <title th:text="#{RC2ReliefTools} + ' - ' + ${title}"></title>
+</head>
+<body>
+<div class="wrapper">
+    <!-- Sidebar -->
+    <nav id="sidebar" class="sticky-top">
+        <th:block th:insert="~{fragments/sidebarLayout :: sidebarLayout}" th:if="${showSideBarItems}"/>
+    </nav>
+
+    <nav id="mainNavBar"
+         class="navbar navbar-dark fixed-top flex-nowrap p-0 shadow navbar-expand h-100">
+    <span class="navbar-brand navbar-logo-width rc-red-bg d-inline-flex fixed-top">
+<!--        <div class="h-100 w-50 mx-auto" id="navbar-logo"></div>-->
+        <img th:src="@{/img/rc2_logo_red_cropped.svg}" alt="RC2 logo" class="h-100 w-75 m-auto py-1 px-3">
+    </span>
+        <ul class="navbar-nav flex-fill flex-nowrap">
+            <li class="nav-item" th:with="setHistory = ${clearHistory == null ? param.clearHistory : clearHistory}">
+                <a th:unless="${setHistory}" class="nav-link text-light" onclick="window.history.go(-1); return false;"><i
+                        class="fas fa-fw fa-chevron-left"></i></a>
+
+                <a th:if="${setHistory}" class="nav-link text-light" th:href="@{__${setHistory}__}"
+                   onclick="window.javafx.clearWebHistory();">
+                    <i class="fas fa-fw fa-chevron-left"></i>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light"><i class="fas fa-fw fa-chevron-right"></i></a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-light" th:href="@{/}"><i class="fas fa-fw fa-home"></i></a>
+            </li>
+            <li class="nav-item" th:if="${showSyncIcon}">
+                <a class="nav-link text-light" th:href="@{/sync}">
+                    <i class="fas fa-fw fa-sync-alt" data-fa-transform="flip-v rotate--45"></i>
+                </a>
+            </li>
+        </ul>
+        <ul class="navbar-nav flex-fill justify-content-end pr-4 align-items-end">
+            <li class="nav-item ">
+                <h5 class="font-weight-light">
+                    <i class="text-light">Profile:</i>
+                    <span id="profile_name" class="px-3 rc-red"></span>
+                </h5>
+            </li>
+            <li class="nav-item">
+                <div class="dropdown">
+                    <button type="button" class="btn btn-outline-light dropdown-toggle"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <i class="fas fa-fw fa-globe"></i>
+                        <th:block th:text="#{CurrentLocale}"/>
+                    </button>
+
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <button type="button" class="dropdown-item"
+                                th:each="localeTag : ${ {'en-US', 'es-ES'} }"
+                                th:onclick="changeLocale([[${localeTag}]])"
+                                th:classappend="${#locale.toLanguageTag().equals(localeTag)}? 'active'"
+                                th:text="#{|LocaleTagDisplay.${localeTag}|}"></button>
+                    </div>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div id="content">
+        <th:block th:insert="${template}"/>
+    </div>
+
+</div>
+
+<script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
+<script th:src="@{/js/popper-1.15.0.min.js}"></script>
+<script th:src="@{/bootstrap-4.3.1-dist/js/bootstrap.bundle.min.js}"></script>
+
+<script>
+    'use strict';
+
+    $(document).ready(function () {
+        $('#sidebarCollapse').on('click', function () {
+            $('#sidebar').toggleClass('active');
+        });
+    });
+
+    async function changeLocale(newLocale) {
+        await fetch(`?locale=${newLocale}`, {
+            method: 'GET'
+        });
+
+        window.location.reload();
+    }
+
+    document.addEventListener('DOMContentLoaded', evt => {
+      document.querySelectorAll('[data-toggle="popover"]').forEach(node => {
+        let preventDefaultRequired = node.closest('a, button, label');
+        if (preventDefaultRequired) {
+          preventDefaultRequired.addEventListener('click', handleTooltipClick, true);
+        } else {
+          node.addEventListener('click', () => $(node).popover('toggle'));
+        }
+      })
+    });
+
+    window.addEventListener('load', evt => {
+        setTimeout(() => {
+            if (!window['javafx']) {
+                throw new Error('javafx not found');
+            }
+        }, 500);
+
+        $('[data-toggle="popover"]').popover({
+          container: 'body',
+          trigger: 'manual'
+        });
+    });
+
+    window.addEventListener('javafxReady', evt => {
+      let profileName = window.javafx.getProfileName();
+      document.getElementById('profile_name').innerText = profileName;
+    });
+
+    function handleTooltipClick(evt) {
+      let closest = evt.target.closest('[data-toggle="popover"]');
+
+      if (closest) {
+        evt.preventDefault();
+        evt.stopImmediatePropagation();
+        $(closest).popover('toggle');
+      }
+    }
+</script>
+</body>
+</html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="layout (template, title)"
+      th:replace="~{::headerLayout(${template}, ${title}, _, 'true', 'true')}">
+</html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="loginLayout (template, title)"
+      th:replace="~{::headerLayout(${template}, ${title}, _,  'false', 'false')}">
+</html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="reportLayout (template, title)"
+      th:replace="~{::headerLayout(${template}, ${title}, ~{::link},  'true', 'true')}">
+
+<link rel="stylesheet" th:href="@{/css/reportStyle.css}"/>
+</html>
+
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="createDistNVisitLayout (template, title)"
+      th:replace="~{::headerLayout(${template}, ${title}, _,  'true', 'false')}">
+</html>

@@ -4,11 +4,11 @@
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
- *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- *  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *  Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ *  *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *   THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
 
@@ -19,7 +19,7 @@ import edu.uw.cse.ifrcdemo.sharedlib.model.datattype.EntitlementStatus;
 import edu.uw.cse.ifrcdemo.sharedlib.model.stub.Entitlement;
 
 public class CsvEntitlement extends BaseSyncRow implements Entitlement {
-  private String assignedItemCode;
+  private String assignedItemPackCode;
   private String authorizationId;
   private AuthorizationType authorizationType;
   private String beneficiaryEntityId;
@@ -27,20 +27,20 @@ public class CsvEntitlement extends BaseSyncRow implements Entitlement {
   private String distributionName;
   private String memberId;
   private String isOverride;
-  private String itemDescription;
-  private String itemId;
-  private String itemName;
+  private String itemPackDescription;
+  private String itemPackId;
+  private String itemPackName;
   private EntitlementStatus status;
   private String statusReason;
 
   @Override
-  public String getAssignedItemCode() {
-    return assignedItemCode;
+  public String getAssignedItemPackCode() {
+    return assignedItemPackCode;
   }
 
   @Override
-  public void setAssignedItemCode(String assignedItemCode) {
-    this.assignedItemCode = assignedItemCode;
+  public void setAssignedItemPackCode(String assignedItemPackCode) {
+    this.assignedItemPackCode = assignedItemPackCode;
   }
 
   @Override
@@ -114,33 +114,33 @@ public class CsvEntitlement extends BaseSyncRow implements Entitlement {
   }
 
   @Override
-  public String getItemDescription() {
-    return itemDescription;
+  public String getItemPackDescription() {
+    return itemPackDescription;
   }
 
   @Override
-  public void setItemDescription(String itemDescription) {
-    this.itemDescription = itemDescription;
+  public void setItemPackDescription(String itemPackDescription) {
+    this.itemPackDescription = itemPackDescription;
   }
 
   @Override
-  public String getItemId() {
-    return itemId;
+  public String getItemPackId() {
+    return itemPackId;
   }
 
   @Override
-  public void setItemId(String itemId) {
-    this.itemId = itemId;
+  public void setItemPackId(String itemPackId) {
+    this.itemPackId = itemPackId;
   }
 
   @Override
-  public String getItemName() {
-    return itemName;
+  public String getItemPackName() {
+    return itemPackName;
   }
 
   @Override
-  public void setItemName(String itemName) {
-    this.itemName = itemName;
+  public void setItemPackName(String itemPackName) {
+    this.itemPackName = itemPackName;
   }
 
   @Override
@@ -171,7 +171,7 @@ public class CsvEntitlement extends BaseSyncRow implements Entitlement {
 
     CsvEntitlement that = (CsvEntitlement) o;
 
-    if (getAssignedItemCode() != null ? !getAssignedItemCode().equals(that.getAssignedItemCode()) : that.getAssignedItemCode() != null)
+    if (getAssignedItemPackCode() != null ? !getAssignedItemPackCode().equals(that.getAssignedItemPackCode()) : that.getAssignedItemPackCode() != null)
       return false;
     if (getAuthorizationId() != null ? !getAuthorizationId().equals(that.getAuthorizationId()) : that.getAuthorizationId() != null)
       return false;
@@ -185,11 +185,11 @@ public class CsvEntitlement extends BaseSyncRow implements Entitlement {
     if (getMemberId() != null ? !getMemberId().equals(that.getMemberId()) : that.getMemberId() != null) return false;
     if (getIsOverride() != null ? !getIsOverride().equals(that.getIsOverride()) : that.getIsOverride() != null)
       return false;
-    if (getItemDescription() != null ? !getItemDescription().equals(that.getItemDescription()) : that.getItemDescription() != null)
+    if (getItemPackDescription() != null ? !getItemPackDescription().equals(that.getItemPackDescription()) : that.getItemPackDescription() != null)
       return false;
-    if (getItemId() != null ? !getItemId().equals(that.getItemId()) : that.getItemId() != null)
+    if (getItemPackId() != null ? !getItemPackId().equals(that.getItemPackId()) : that.getItemPackId() != null)
       return false;
-    if (getItemName() != null ? !getItemName().equals(that.getItemName()) : that.getItemName() != null)
+    if (getItemPackName() != null ? !getItemPackName().equals(that.getItemPackName()) : that.getItemPackName() != null)
       return false;
     if (getStatus() != that.getStatus()) return false;
     return getStatusReason() != null ? getStatusReason().equals(that.getStatusReason()) : that.getStatusReason() == null;
@@ -198,7 +198,7 @@ public class CsvEntitlement extends BaseSyncRow implements Entitlement {
   @Override
   public int hashCode() {
     int result = super.hashCode();
-    result = 31 * result + (getAssignedItemCode() != null ? getAssignedItemCode().hashCode() : 0);
+    result = 31 * result + (getAssignedItemPackCode() != null ? getAssignedItemPackCode().hashCode() : 0);
     result = 31 * result + (getAuthorizationId() != null ? getAuthorizationId().hashCode() : 0);
     result = 31 * result + (getAuthorizationType() != null ? getAuthorizationType().hashCode() : 0);
     result = 31 * result + (getBeneficiaryEntityId() != null ? getBeneficiaryEntityId().hashCode() : 0);
@@ -206,9 +206,9 @@ public class CsvEntitlement extends BaseSyncRow implements Entitlement {
     result = 31 * result + (getDistributionName() != null ? getDistributionName().hashCode() : 0);
     result = 31 * result + (getMemberId() != null ? getMemberId().hashCode() : 0);
     result = 31 * result + (getIsOverride() != null ? getIsOverride().hashCode() : 0);
-    result = 31 * result + (getItemDescription() != null ? getItemDescription().hashCode() : 0);
-    result = 31 * result + (getItemId() != null ? getItemId().hashCode() : 0);
-    result = 31 * result + (getItemName() != null ? getItemName().hashCode() : 0);
+    result = 31 * result + (getItemPackDescription() != null ? getItemPackDescription().hashCode() : 0);
+    result = 31 * result + (getItemPackId() != null ? getItemPackId().hashCode() : 0);
+    result = 31 * result + (getItemPackName() != null ? getItemPackName().hashCode() : 0);
     result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
     result = 31 * result + (getStatusReason() != null ? getStatusReason().hashCode() : 0);
     return result;
@@ -217,7 +217,7 @@ public class CsvEntitlement extends BaseSyncRow implements Entitlement {
   @Override
   public String toString() {
     return "CsvEntitlement{" +
-        "assignedItemCode='" + assignedItemCode + '\'' +
+        "assignedItemPackCode='" + assignedItemPackCode + '\'' +
         ", authorizationId='" + authorizationId + '\'' +
         ", authorizationType=" + authorizationType +
         ", beneficiaryEntityId='" + beneficiaryEntityId + '\'' +
@@ -225,9 +225,9 @@ public class CsvEntitlement extends BaseSyncRow implements Entitlement {
         ", distributionDescription='" + distributionName + '\'' +
         ", memberId='" + memberId + '\'' +
         ", isOverride='" + isOverride + '\'' +
-        ", itemDescription='" + itemDescription + '\'' +
-        ", itemId='" + itemId + '\'' +
-        ", itemName='" + itemName + '\'' +
+        ", itemPackDescription='" + itemPackDescription + '\'' +
+        ", itemPackId='" + itemPackId + '\'' +
+        ", itemPackName='" + itemPackName + '\'' +
         ", status=" + status +
         ", statusReason='" + statusReason + '\'' +
         '}';

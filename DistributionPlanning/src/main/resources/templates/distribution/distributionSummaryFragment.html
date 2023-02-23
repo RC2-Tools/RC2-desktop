@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<div class="row" th:fragment="summary(newDistForm, demoModel)">
+    <!--/*@thymesVar id="newDistForm" type="edu.uw.cse.ifrcdemo.distplan.ui.distribution.DistributionFormModel"*/-->
+    <!--/*@thymesVar id="demoModel" type="edu.uw.cse.ifrcdemo.distplan.ui.demographics.DemographicsModel"*/-->
+    <div class="col-12">
+        <ul class="list-group list-group-flush">
+            <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                    #{NameLabel}, ${newDistForm.name})}"></li>
+
+            <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                    #{DescriptionLabel}, ${newDistForm.description})}"></li>
+
+            <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                    #{LocationLabel}, ${newDistForm.locationName})}"></li>
+
+            <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                    #{FieldReportFormBtnTxt},
+                    ${newDistForm.fieldSummaryReport != null}? ${newDistForm.fieldSummaryReport.getFormId()})}"></li>
+        </ul>
+    </div>
+
+    <div class="col-12">
+        <h6 class="text-uppercase font-weight-bold" th:text="#{Items}"></h6>
+    </div>
+    <div class="accordion col-12">
+        <div class="card border-0"
+             th:each="auth, stat : ${newDistForm.authorizations}"
+             th:with="headerId='authHeader' + ${stat.index}, collapseId='authCollapse' + ${stat.index}">
+            <div class="card-header bg-transparent p-0" th:id="${headerId}">
+                <h2 class="mb-0">
+                    <button class="btn btn-link pl-0 w-100 text-left" type="button"
+                            data-toggle="collapse" th:data-target="'#' + ${collapseId}"
+                            aria-expanded="false" th:aria-controls="${collapseId}"
+                            th:text="${auth.itemName}"></button>
+                </h2>
+            </div>
+
+            <div class="collapse" th:id="${collapseId}" th:aria-labelledby="${headerId}">
+                <div class="card-body border-secondary border border-top-0 rounded-bottom">
+                    <div class="row" th:insert="~{fragments/directiveSummary :: authSummary(${auth}, ${auth.demographicsModel})}"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <th:block th:if="${demoModel}" th:insert="~{fragments/directiveSummary :: demoTable(${demoModel})}"/>
+    <p th:unless="${demoModel}">Demographics Distribution Unavailable</p>
+</div>
+</html>

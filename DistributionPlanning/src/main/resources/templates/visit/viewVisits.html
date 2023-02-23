@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::page}, #{ViewVisits})}">
+<th:block th:fragment="page">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ViewVisits})}"/>
+
+    <div class="row">
+        <div class="col-12">
+            <div class="table-responsive">
+                <table class="table table-borderless table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="w-50" th:text="#{NameLabel}"></th>
+                         <th scope="col" th:text="#{Status}"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="visit : ${visitList}">
+                        <td th:text="${visit.name}"></td>
+                        <td>
+                            <select th:id="${visit.rowId}" class="custom-select custom-select-sm"
+                                    onchange="updateStatus(this)">
+                                <option th:each="status : ${statusValues}"
+                                        th:text="#{${status.displayNameKey}}" th:value="${status.name()}"
+                                        th:selected="${visit.status} == ${status}"></option>
+                            </select>
+                        </td>
+                        <td>
+                            <a class="btn btn-secondary btn-sm"
+                               th:href="${#mvc.url('VC#viewVisit').arg(0, visit.rowId).build()}"
+                               th:text="#{ViewBtnTxt}"></a>
+                            <a class="btn btn-secondary btn-sm"
+                               th:href="${#mvc.url('VEC#editVisit').arg(0, visit.rowId).build()}"
+                               th:text="#{EditBtnTxt}"></a>
+
+                            <button type="button" class="btn btn-secondary btn-sm"
+                                    data-toggle="modal" data-target="#saveAsTemplateModal"
+                                    th:data-row-id="${visit.rowId}" th:text="#{SaveAsTemplate}">
+                            </button>
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+
+<th:block th:insert="~{rctemplate/saveAsTemplate :: modal}"/>
+
+<script>
+  'use strict';
+
+  function updateStatus(context) {
+    context.setAttribute('disabled', true);
+
+    let rowId = context.id;
+    let status = context.value;
+
+    if (!rowId || !status) {
+      return;
+    }
+
+    fetch('status', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify({
+        'rowId': rowId,
+        'status': status
+      })
+    })
+      .then(async res => {
+        if (res.ok) {
+          context.removeAttribute('disabled')
+        } else {
+          let resError = await res.text();
+
+          console.error(resError);
+          window.javafx.openFxErrorDialog(resError)
+        }
+      })
+      .catch(e => {
+        console.error(e);
+        window.javafx.openFxErrorDialog(e);
+      });
+  }
+</script>
+</th:block>
+</html>

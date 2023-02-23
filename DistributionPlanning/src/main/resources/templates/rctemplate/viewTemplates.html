@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{${type}})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{${type}})}"/>
+
+    <div class="row">
+        <div class="col-12">
+            <p id="templateListEmpty" th:text="#{NoTemplate}" th:if="${templateList.empty}"></p>
+
+            <div class="table-responsive" th:if="${!templateList.empty}">
+                <table class="table table-borderless table-hover">
+                    <thead>
+                    <tr>
+                        <th scope="col" class="w-50" th:text="#{NameLabel}"></th>
+                        <th scope="col"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="template : ${templateList}">
+                        <td th:text="${template.templateName}"></td>
+                        <td th:with="typeStr = (${type} == 'DistributionTemplate')? 'Dist' : 'Visit'">
+                            <a class="btn btn-secondary btn-sm"
+                               th:href="${#mvc.url('RTC#view' + typeStr + 'Template').arg(0, template.rowId).build()}"
+                               th:text="#{ViewBtnTxt}"></a>
+                            <form class="d-inline-block" method="post"
+                                  th:action="${#mvc.url('RTC#use' + typeStr + 'Template').build()}">
+                                <input type="hidden" name="templateRowId" th:value="${template.rowId}">
+                                <button type="submit" class="btn btn-secondary btn-sm" th:text="#{Apply}">Apply</button>
+                            </form>
+                            <a class="btn btn-secondary btn-sm"
+                               th:href="${#mvc.url('RTC#exportTemplate').arg(0, template.rowId).build()}"
+                               th:text="#{Export}"></a>
+                            <!-- TODO: -->
+                            <!-- <a class="btn btn-secondary btn-sm"-->
+                            <!--    th:href="|#|"-->
+                            <!--    th:text="#{ViewBtnTxt}">Remove</a>-->
+                        </td>
+                    </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+</html>

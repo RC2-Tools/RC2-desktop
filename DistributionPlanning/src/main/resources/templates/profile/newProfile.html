@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{NewProfile})}">
+<body>
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{NewProfile})}"/>
+
+    <div class="row">
+        <form method="post" class="col-12" th:object="${profileFormModel}">
+            <div class="form-group row align-items-center">
+                <label for="newProfName" class="col-2 col-form-label" th:text="#{ProfileName}"></label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="newProfName" th:field="*{profileName}"
+                           th:placeholder="#{EnterAName}"
+                           th:errorclass="is-invalid"
+                           th:insert="~{fragments/feedback :: msg('profileFormModel.profileName')}">
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center">
+                <label for="serverUrl" class="col-2 col-form-label" th:text="#{RC2ServerAddress}"></label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="serverUrl" th:field="*{serverUrl}"
+                           th:errorclass="is-invalid"
+                           th:insert="~{fragments/feedback :: msg('profileFormModel.serverUrl')}">
+                </div>
+            </div>
+
+            <div class="form-group row align-items-center">
+                <label for="serverUsername" class="col-2 col-form-label" th:text="#{UsernameLabel}"></label>
+                <div class="col-10">
+                    <input type="text" class="form-control" id="serverUsername" th:field="*{serverUsername}">
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-lg" th:text="#{Add}"></button>
+        </form>
+    </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+          xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+    <id>base-files-zip</id>
+    <formats>
+        <format>zip</format>
+    </formats>
+    <includeBaseDirectory>false</includeBaseDirectory>
+    <fileSets>
+        <fileSet>
+            <!-- output to root of zip -->
+            <outputDirectory/>
+            <directory>${app-designer.directory}/app/config</directory>
+            <includes>
+                <include>assets/**</include>
+                <include>tables/authorizations/**</include>
+                <include>tables/beneficiary_entities/**</include>
+                <include>tables/deliveries/**</include>
+                <include>tables/distribution_reports/**</include>
+                <include>tables/entitlements/**</include>
+                <include>tables/members/**</include>
+                <include>tables/visits/**</include>
+                <include>tables/visit_programs/**</include>
+                <include>tables/distributions/**</include>
+                <!-- This is necessary to make the search functionality work -->
+                <include>tables/colombia_search/**</include>
+            </includes>
+        </fileSet>
+    </fileSets>
+</assembly>

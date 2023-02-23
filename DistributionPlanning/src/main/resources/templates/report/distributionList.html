@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::distListView}, #{Reports})}">
+
+<th:block th:fragment="distListView">
+    <main role="main" class="container">
+        <th:block th:insert="~{fragments/commonDownload::commonDownload}"></th:block>
+        <div th:insert="~{report/distributionListCommon :: commonDistList}"></div>
+    </main>
+</th:block>
+
+</html>

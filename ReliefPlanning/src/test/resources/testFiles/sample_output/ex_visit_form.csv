@@ -1,2 +1,0 @@
-_id,_form_id,_locale,_savepoint_type,_savepoint_timestamp,_savepoint_creator,_create_user,_last_update_user,_deleted,_data_etag_at_modification,notes,satisfied,_default_access,_group_modify,_group_privileged,_group_read_only,_row_etag,_row_owner
-uuid:4bff88b5-8651-4936-a67a-e603f9783718,,default,COMPLETE,2019-03-16T00:25:35.462000000,username:sue,sue,sue,false,,notesnotesnotesnotes,yes,FULL,,,,,

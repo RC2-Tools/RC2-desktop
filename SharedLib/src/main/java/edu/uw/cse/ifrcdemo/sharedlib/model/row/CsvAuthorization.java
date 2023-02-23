@@ -4,11 +4,11 @@
  *
  * Redistribution and use in source and binary forms, with or without modification, are permitted provided that the following conditions are met:
  *
- *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
- *  Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
- *  Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
+ *  *  Redistributions of source code must retain the above copyright notice, this list of conditions and the following disclaimer.
+ *  * Redistributions in binary form must reproduce the above copyright notice, this list of conditions and the following disclaimer in the documentation and/or other materials provided with the distribution.
+ *  * Neither the name of the University of Washington nor the names of its contributors may be used to endorse or promote products derived from this software without specific prior written permission.
  *
- * THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
+ *   THIS SOFTWARE IS PROVIDED BY THE UNIVERSITY OF WASHINGTON AND CONTRIBUTORS “AS IS” AND ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED. IN NO EVENT SHALL THE UNIVERSITY OF WASHINGTON OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY, WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
  *
  */
 
@@ -24,10 +24,10 @@ public class CsvAuthorization extends BaseSyncRow implements Authorization {
   private String dateCreated;
   private ExtraFieldEntitlements extraFieldEntitlements;
   private String forMember;
-  private String itemDescription;
-  private String itemId;
-  private String itemName;
-  private String itemRanges;
+  private String itemPackDescription;
+  private String itemPackId;
+  private String itemPackName;
+  private String itemPackRanges;
   private AuthorizationStatus status;
   private String statusReason;
   private AuthorizationType type;
@@ -75,43 +75,43 @@ public class CsvAuthorization extends BaseSyncRow implements Authorization {
   }
 
   @Override
-  public String getItemDescription() {
-    return itemDescription;
+  public String getItemPackDescription() {
+    return itemPackDescription;
   }
 
   @Override
-  public void setItemDescription(String itemDescription) {
-    this.itemDescription = itemDescription;
+  public void setItemPackDescription(String itemPackDescription) {
+    this.itemPackDescription = itemPackDescription;
   }
 
   @Override
-  public String getItemId() {
-    return itemId;
+  public String getItemPackId() {
+    return itemPackId;
   }
 
   @Override
-  public void setItemId(String itemId) {
-    this.itemId = itemId;
+  public void setItemPackId(String itemPackId) {
+    this.itemPackId = itemPackId;
   }
 
   @Override
-  public String getItemName() {
-    return itemName;
+  public String getItemPackName() {
+    return itemPackName;
   }
 
   @Override
-  public void setItemName(String itemName) {
-    this.itemName = itemName;
+  public void setItemPackName(String itemPackName) {
+    this.itemPackName = itemPackName;
   }
 
   @Override
-  public String getItemRanges() {
-    return itemRanges;
+  public String getItemPackRanges() {
+    return itemPackRanges;
   }
 
   @Override
-  public void setItemRanges(String itemRanges) {
-    this.itemRanges = itemRanges;
+  public void setItemPackRanges(String itemPackRanges) {
+    this.itemPackRanges = itemPackRanges;
   }
 
   @Override
@@ -179,13 +179,13 @@ public class CsvAuthorization extends BaseSyncRow implements Authorization {
     if (getExtraFieldEntitlements() != that.getExtraFieldEntitlements()) return false;
     if (getForMember() != null ? !getForMember().equals(that.getForMember()) : that.getForMember() != null)
       return false;
-    if (getItemDescription() != null ? !getItemDescription().equals(that.getItemDescription()) : that.getItemDescription() != null)
+    if (getItemPackDescription() != null ? !getItemPackDescription().equals(that.getItemPackDescription()) : that.getItemPackDescription() != null)
       return false;
-    if (getItemId() != null ? !getItemId().equals(that.getItemId()) : that.getItemId() != null)
+    if (getItemPackId() != null ? !getItemPackId().equals(that.getItemPackId()) : that.getItemPackId() != null)
       return false;
-    if (getItemName() != null ? !getItemName().equals(that.getItemName()) : that.getItemName() != null)
+    if (getItemPackName() != null ? !getItemPackName().equals(that.getItemPackName()) : that.getItemPackName() != null)
       return false;
-    if (getItemRanges() != null ? !getItemRanges().equals(that.getItemRanges()) : that.getItemRanges() != null)
+    if (getItemPackRanges() != null ? !getItemPackRanges().equals(that.getItemPackRanges()) : that.getItemPackRanges() != null)
       return false;
     if (getStatus() != that.getStatus()) return false;
     if (getStatusReason() != null ? !getStatusReason().equals(that.getStatusReason()) : that.getStatusReason() != null)
@@ -203,10 +203,10 @@ public class CsvAuthorization extends BaseSyncRow implements Authorization {
     result = 31 * result + (getDateCreated() != null ? getDateCreated().hashCode() : 0);
     result = 31 * result + (getExtraFieldEntitlements() != null ? getExtraFieldEntitlements().hashCode() : 0);
     result = 31 * result + (getForMember() != null ? getForMember().hashCode() : 0);
-    result = 31 * result + (getItemDescription() != null ? getItemDescription().hashCode() : 0);
-    result = 31 * result + (getItemId() != null ? getItemId().hashCode() : 0);
-    result = 31 * result + (getItemName() != null ? getItemName().hashCode() : 0);
-    result = 31 * result + (getItemRanges() != null ? getItemRanges().hashCode() : 0);
+    result = 31 * result + (getItemPackDescription() != null ? getItemPackDescription().hashCode() : 0);
+    result = 31 * result + (getItemPackId() != null ? getItemPackId().hashCode() : 0);
+    result = 31 * result + (getItemPackName() != null ? getItemPackName().hashCode() : 0);
+    result = 31 * result + (getItemPackRanges() != null ? getItemPackRanges().hashCode() : 0);
     result = 31 * result + (getStatus() != null ? getStatus().hashCode() : 0);
     result = 31 * result + (getStatusReason() != null ? getStatusReason().hashCode() : 0);
     result = 31 * result + (getType() != null ? getType().hashCode() : 0);
@@ -222,10 +222,10 @@ public class CsvAuthorization extends BaseSyncRow implements Authorization {
         ", dateCreated='" + dateCreated + '\'' +
         ", extraFieldEntitlements=" + extraFieldEntitlements +
         ", forMember='" + forMember + '\'' +
-        ", itemPackDescription='" + itemDescription + '\'' +
-        ", itemPackId='" + itemId + '\'' +
-        ", itemPackName='" + itemName + '\'' +
-        ", itemPackRanges='" + itemRanges + '\'' +
+        ", itemPackDescription='" + itemPackDescription + '\'' +
+        ", itemPackId='" + itemPackId + '\'' +
+        ", itemPackName='" + itemPackName + '\'' +
+        ", itemPackRanges='" + itemPackRanges + '\'' +
         ", status=" + status +
         ", statusReason='" + statusReason + '\'' +
         ", type=" + type +

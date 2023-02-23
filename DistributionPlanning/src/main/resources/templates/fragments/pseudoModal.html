@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:fragment="modal(header, body, footer)">
+<div class="modal show pseudo-modal pb-5 px-3">
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+        <div class="modal-content">
+            <div class="modal-header flex-column" th:insert="${header}"></div>
+
+            <div class="modal-body">
+                <div class="container-fluid px-0" th:insert="${body}"></div>
+            </div>
+
+            <div class="modal-footer" th:insert="${footer}"></div>
+        </div>
+    </div>
+</div>
+
+<div class="modal-backdrop show pseudo-modal-backdrop"></div>
+
+<script>
+  'use strict';
+
+  window.addEventListener('DOMContentLoaded', evt => {
+    document.body.classList.add('modal-open');
+  });
+</script>
+</html>

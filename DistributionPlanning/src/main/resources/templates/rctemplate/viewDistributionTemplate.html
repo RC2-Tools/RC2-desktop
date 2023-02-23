@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      th:replace="~{fragments/layout :: layout (~{::main}, #{ViewDistributions})}">
+<main role="main" class="container">
+    <th:block th:insert="~{fragments/sectionHeading :: sectionHeading(#{ViewDistributionTemplates})}"/>
+
+    <div class="row">
+        <div class="col-12">
+            <ul class="list-group list-group-flush">
+                <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                    #{FieldReportFormBtnTxt},
+                    ${distForm.fieldSummaryReport != null}? ${distForm.fieldSummaryReport.getFormId()})}"></li>
+            </ul>
+        </div>
+
+        <div class="col-12">
+            <h6 class="text-uppercase font-weight-bold" th:text="#{Items}"></h6>
+        </div>
+
+        <div class="accordion col-12">
+            <div class="card border-0"
+                 th:each="auth, stat : ${distForm.authorizations}"
+                 th:with="headerId='authHeader' + ${stat.index}, collapseId='authCollapse' + ${stat.index}">
+                <div class="card-header bg-transparent p-0" th:id="${headerId}">
+                    <h2 class="mb-0">
+                        <button class="btn btn-link pl-0 w-100 text-left" type="button"
+                                data-toggle="collapse" th:data-target="'#' + ${collapseId}"
+                                aria-expanded="false" th:aria-controls="${collapseId}"
+                                th:text="${auth.itemName}"></button>
+                    </h2>
+                </div>
+
+                <div class="collapse" th:id="${collapseId}" th:aria-labelledby="${headerId}">
+                    <div class="card-body border-secondary border border-top-0 rounded-bottom">
+                        <div class="row">
+                            <div class="col-12">
+                                <ul class="list-group list-group-flush">
+                                    <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                                        #{Item}, ${auth.itemName})}"></li>
+
+                                    <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                                        #{CustomDeliveryFormBtnTxt},
+                                        ${auth.deliveryForm != null}? ${auth.deliveryForm.getFormId()})}"></li>
+
+                                    <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                                        #{ExtraFieldEntitlementModeLabel}, ${auth.extraFieldEntitlement})}"></li>
+
+                                    <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                                        #{AssignBarcodes}, ${auth.assignSpecificBarcode} ? #{Yes} : #{No})}"></li>
+
+                                    <li th:replace="~{fragments/directiveSummary :: summaryListItem(
+                                        #{GenEntByLabel}, ${auth.generateBy})}"></li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</main>
+</html>

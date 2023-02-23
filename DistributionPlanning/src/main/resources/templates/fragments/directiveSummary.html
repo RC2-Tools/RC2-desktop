@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="authSummary(auth, demo)">
+    <!--/*@thymesVar id="auth" type="edu.uw.cse.ifrcdemo.distplan.ui.authorization.AuthorizationFormModel"*/-->
+    <!--/*@thymesVar id="demo" type="edu.uw.cse.ifrcdemo.distplan.ui.demographics.DemographicsModel"*/-->
+    <div class="col-12">
+        <ul class="list-group list-group-flush">
+            <li th:replace="~{::summaryListItem(#{Item}, ${auth.itemName})}"></li>
+            <li th:replace="~{::summaryListItem(#{CustomDeliveryFormBtnTxt},
+                ${auth.deliveryForm != null}? ${auth.deliveryForm.getFormId()})}"></li>
+            <li th:replace="~{::summaryListItem(#{ExtraFieldEntitlementModeLabel}, ${auth.extraFieldEntitlement})}"></li>
+            <li th:replace="~{::summaryListItem(#{AssignBarcodes}, ${auth.assignSpecificBarcode} ? #{Yes} : #{No})}"></li>
+            <li th:replace="~{::summaryListItem(#{GenEntByLabel}, ${auth.generateBy})}"></li>
+        </ul>
+    </div>
+
+    <th:block th:if="${demo}" th:insert="~{::demoTable(${demo})}"/>
+    <p th:unless="${demo}">Demographics Distribution Unavailable</p>
+</th:block>
+
+<th:block th:fragment="visitProgSummary(visitProg, demo)">
+    <!--/*@thymesVar id="visitProg" type="edu.uw.cse.ifrcdemo.distplan.ui.visit.VisitFormModel"*/-->
+    <!--/*@thymesVar id="demo" type="edu.uw.cse.ifrcdemo.distplan.ui.demographics.DemographicsModel"*/-->
+    <div class="col-12">
+        <ul class="list-group list-group-flush">
+            <li th:replace="~{::summaryListItem(#{NameLabel}, ${visitProg.name})}"></li>
+            <li th:replace="~{::summaryListItem(#{DescriptionLabel}, ${visitProg.description})}"></li>
+            <li th:replace="~{::summaryListItem(#{LocationLabel}, ${visitProg.locationName})}"></li>
+            <li th:replace="~{::summaryListItem(#{VisitForm}, ${visitProg.visitForm.getFormId()})}"></li>
+            <li th:replace="~{::summaryListItem(#{GenerateVisitsBy}, ${visitProg.generateBy})}"></li>
+        </ul>
+    </div>
+
+    <th:block th:if="${demo}" th:insert="~{::demoTable(${demo})}"/>
+    <p th:unless="${demo}">Demographics Distribution Unavailable</p>
+</th:block>
+
+<li class="list-group-item border-0 pb-0 pl-0" th:fragment="summaryListItem(label, value)">
+    <!--/*@thymesVar id="label" type="java.lang.String"*/-->
+    <!--/*@thymesVar id="value" type="java.lang.String"*/-->
+    <h6 th:text="${label}" class="text-uppercase font-weight-bold"></h6>
+
+    <th:block th:switch="${#strings.isEmpty(value)}">
+        <p th:case="false" th:text="${value}"></p>
+        <p th:case="true" class="text-muted">⸺</p>
+    </th:block>
+</li>
+
+<div class="table-responsive" th:fragment="demoTable(model)">
+    <!--/*@thymesVar id="model" type="edu.uw.cse.ifrcdemo.distplan.ui.demographics.DemographicsModel"*/-->
+    <table class="table table-borderless table-hover">
+        <thead>
+        <tr>
+            <th colspan="100" class="text-center text-uppercase" th:text="#{TargetedPopulation}"></th>
+        </tr>
+        <tr>
+            <th scope="col" th:text="#{AgeGender}"></th>
+            <th th:replace="~{::popCol(#{AgeRangeStartEnd(0, 4)})}"></th>
+            <th th:replace="~{::popCol(#{AgeRangeStartEnd(5, 17)})}"></th>
+            <th th:replace="~{::popCol(#{AgeRangeStartEnd(18, 49)})}"></th>
+            <th th:replace="~{::popCol(#{AgeRangeOver(50)})}"></th>
+            <th th:replace="~{::popCol(#{NA})}"></th>
+            <th th:replace="~{::popCol(#{Total})}"></th>
+        </tr>
+        </thead>
+
+        <tbody>
+        <th:block th:each="entry : ${model.genderAgeDistribution}">
+            <tr th:replace="~{::popRow(
+                #{|Gender.${entry.key}|},
+                ${entry.value.values()},
+                ${model.genderMarginalDistribution.get(entry.key)})}"></tr>
+        </th:block>
+        </tbody>
+
+        <tfoot>
+        <tr th:replace="~{::popRow(#{Total}, ${model.ageMarginalDistribution.values()}, ${model.total})}"></tr>
+        </tfoot>
+    </table>
+</div>
+
+<tr th:fragment="popRow(label, vals, total)">
+    <th scope="row" th:text="${label}"></th>
+    <td class="text-right" th:each="val : ${vals}" th:text="${val}"></td>
+    <td class="text-right" th:text="${total}"></td>
+</tr>
+
+<th scope="col" class="text-right" th:fragment="popCol(label)" th:text="${label}"></th>
+</html>
