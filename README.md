@@ -11,6 +11,14 @@
 - Java 1.8 JDK
 	- Older versions of Java can be downloaded at oracle.com/java/technologies/downloads/archive/ (requires an Oracle account)
 
+## Clone the repo
+```bash
+cd <directory you want to download into>
+git clone --recurse-submodules https://github.com/RC2-Tools/RC2-desktop.git
+
+#After creating a fork into your own repository
+git clone --recurse-submodules https://github.com/<YourUserName>/RC2-desktop.git
+```
 ## Build
 Run `mvn clean install`
 To make the installer, run `mvn clean deploy`
