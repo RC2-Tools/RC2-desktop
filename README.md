@@ -28,6 +28,7 @@ git clone --recurse-submodules https://github.com/RC2-Tools/RC2-desktop.git
 git clone --recurse-submodules https://github.com/<YourUserName>/RC2-desktop.git
 ```
 - After logging into or making an account on GitHub, use button on upper right to make a fork before doing second step
+- `git` can be downloaded from https://git-scm.com/book/en/v2/Getting-Started-Installing-Git
 
 ## Build
 Run `mvn clean install`
