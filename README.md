@@ -27,7 +27,7 @@
 	- Set `Variable name` to [respective name]
 	- Set `Variable value` to [respective path]
 #### Linux/Mac
-- Open `command terminal`
+- Open `Terminal`
 ```bash
 export M2_HOME=<respective path>
 export M2=$M2_HOME/bin
