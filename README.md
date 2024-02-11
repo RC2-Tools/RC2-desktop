@@ -13,6 +13,12 @@
    			- E.g. `C:\Program Files\Maven\apache-maven-3.8.4` (make adjustments for version and location)
      	- `M2` should be added and set to the `bin` folder.
        		- E.g. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
+- Java 1.8 JDK
+	- Older versions of Java can be downloaded at oracle.com/java/technologies/downloads/archive/ (requires an Oracle account)
+ 	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` in enviromental variables
+ 		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
+   	- Once install is complete, it may also be neccessary to ensure that the editor being used is also set utilize 1.8
+
 ### Setting Enviromental Variables
 #### Windows
 - `Control Panel` > `System and Security` > `System` > `Advanced System Settings` > `Enviroment Variables` > (under System Variables) `New`
@@ -25,12 +31,8 @@
 ```bash
 export M2_HOME=<respective path>
 export M2=$M2_HOME/bin
+export JAVA_HOME=<respective path>
 ```
-- Java 1.8 JDK
-	- Older versions of Java can be downloaded at oracle.com/java/technologies/downloads/archive/ (requires an Oracle account)
- 	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` in enviromental variables
- 		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
-   	- Once install is complete, it may also be neccessary to ensure that the editor being used is also set utilize 1.8
 
 ## Clone the repo
 ```bash
