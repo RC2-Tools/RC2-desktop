@@ -55,3 +55,8 @@ To make the installer, run `mvn clean deploy`
 
 ## Build HTML for Tables
 In `app-designer`, run `grunt compile-config-templates`.
+- `grunt` can be installed from https://gruntjs.com/getting-started
+	- Requires `npm` which is an extension of `nvm`
+		- For Windows, get `nvm`/`npm` from https://github.com/coreybutler/nvm-windows?tab=readme-ov-file
+		- For Linux/Mac get `npm`/`npm` https://github.com/nvm-sh/nvm
+		- Once `nvm` is installed, it may be neccessary to turn `nvm on` in the command line before `npm` is recognised
