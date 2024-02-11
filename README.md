@@ -13,6 +13,19 @@
    			- E.g. `C:\Program Files\Maven\apache-maven-3.8.4` (make adjustments for version and location)
      	- `M2` should be added and set to the `bin` folder.
        		- E.g. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
+### Setting Enviromental Variables
+#### Windows
+- `Control Panel` > `System and Security` > `System` > `Advanced System Settings` > `Enviroment Variables` > (under System Variables) `New`
+
+  OR search `system environment variables` in `Search Bar` > select `Edit the system enviroment variables` > `Enviroment Variables`, (under System Variables) `New`
+	- Set `Variable name` to [respective name]
+	- Set `Variable value` to [respective path]
+#### Linux/Mac
+- Open `command terminal`
+```bash
+export M2_HOME=<respective path>
+export M2=$M2_HOME/bin
+```
 - Java 1.8 JDK
 	- Older versions of Java can be downloaded at oracle.com/java/technologies/downloads/archive/ (requires an Oracle account)
  	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` in enviromental variables
@@ -27,8 +40,8 @@ git clone --recurse-submodules https://github.com/RC2-Tools/RC2-desktop.git
 #After creating a fork into your own repository
 git clone --recurse-submodules https://github.com/<YourUserName>/RC2-desktop.git
 ```
-- After logging into or making an account on GitHub, use button on upper right to make a fork before doing second step
 - `git` can be downloaded from https://git-scm.com/downloads
+- After logging into or making an account on GitHub, use button on upper right to make a fork before doing second step
 
 ## Build
 Run `mvn clean install`
