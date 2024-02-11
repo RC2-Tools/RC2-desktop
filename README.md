@@ -6,7 +6,7 @@
 
 ## Dependencies
 - Maven 3.6 or higher
-	- Can be downloaded at maven.apache.org/download.cgi
+	- Can be downloaded at https://maven.apache.org/download.cgi
 	- Ensure that your `PATH` is set to Maven's `bin` folder.
  		- Navigate to the enviromental variables for your system.
  		- `MAVEN_HOME` should be added and set to the directory.
