@@ -24,11 +24,11 @@
 #### Windows
 - ***Control Panel*** **>** ***System and Security*** **>** ***System*** **>** ***Advanced System Settings*** **>** ***Enviroment Variables*** **>** (under *System Variables*) ***New***
 
-  **<ins>OR</ins>** search ***system environment variables*** in ***Search Bar*** **>** select ***Edit the system enviroment variables*** **>** ***Enviroment Variables*** **>** (under *System Variables*) ***New***
+  **<ins>OR</ins>** search `system environment variables` in ***Search Bar*** **>** select ***Edit the system enviroment variables*** **>** ***Enviroment Variables*** **>** (under *System Variables*) ***New***
 	- Set ***Variable name*** to *[respective name]*
 	- Set ***Variable value*** to *[respective path]*
 #### Linux/Mac
-- Open `Terminal`
+- Open ***Terminal***
 ```bash
 export M2_HOME=<respective path>
 export M2=$M2_HOME/bin
