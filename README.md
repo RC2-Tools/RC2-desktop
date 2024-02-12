@@ -19,13 +19,14 @@
  		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
    	- Once install is complete, it may also be neccessary to ensure that the editor being used is also set utilize 1.8
 
+---
 ### Setting Enviromental Variables
 #### Windows
-- `Control Panel` > `System and Security` > `System` > `Advanced System Settings` > `Enviroment Variables` > (under System Variables) `New`
+- ***Control Panel*** **>** ***System and Security*** **>** ***System*** **>** ***Advanced System Settings*** **>** ***Enviroment Variables*** **>** (under *System Variables*) ***New***
 
-  **<ins>OR</ins>** search `system environment variables` in `Search Bar` > select `Edit the system enviroment variables` > `Enviroment Variables` > (under System Variables) `New`
-	- Set `Variable name` to [respective name]
-	- Set `Variable value` to [respective path]
+  **<ins>OR</ins>** search ***system environment variables*** in ***Search Bar*** **>** select ***Edit the system enviroment variables*** **>** ***Enviroment Variables*** **>** (under *System Variables*) ***New***
+	- Set ***Variable name*** to *[respective name]*
+	- Set ***Variable value*** to *[respective path]*
 #### Linux/Mac
 - Open `Terminal`
 ```bash
@@ -33,6 +34,7 @@ export M2_HOME=<respective path>
 export M2=$M2_HOME/bin
 export JAVA_HOME=<respective path>
 ```
+---
 
 ## Clone the repo
 ```bash
@@ -43,7 +45,7 @@ git clone --recurse-submodules https://github.com/RC2-Tools/RC2-desktop.git
 git clone --recurse-submodules https://github.com/<YourUserName>/RC2-desktop.git
 ```
 - `git` can be downloaded from [git-scm](https://git-scm.com/downloads)
-- After logging into or making an account on GitHub, use button on upper right to make a `Fork` before doing second step
+- After logging into or making an account on GitHub, use button on upper right to make a ***Fork*** before doing second step
 
 ## Build
 Run `mvn clean install`
