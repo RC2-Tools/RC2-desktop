@@ -7,11 +7,11 @@
 ## Dependencies
 - Maven 3.6 or higher
 	- Can be downloaded from [Apache](https://maven.apache.org/download.cgi)
-	- Ensure that your `PATH` is set to Maven's `bin` folder.
- 		- Navigate to the enviromental variables for your system.
- 		- `MAVEN_HOME` should be added and set to the directory.
+	- Ensure that your `PATH` is set to Maven's `bin` folder
+ 		- Navigate to the enviromental variables for your system
+ 		- `MAVEN_HOME` should be added and set to the directory
    			- E.g. `C:\Program Files\Maven\apache-maven-3.8.4` (make adjustments for version and location)
-     	- `M2` should be added and set to the `bin` folder.
+     	- `M2` should be added and set to the `bin` folder
        		- I.e. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
 - Java 1.8 JDK
 	- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/downloads/archive/) (requires an Oracle account)
@@ -53,7 +53,7 @@ To make the installer, run `mvn clean deploy`
 
 ##### Options
  - Use `-DskipTests` to skip tests.
- - Use `-Dapp-designer.directory=PATH` to use `PATH` instead of the `app-designer` submodule.
+ - Use `-Dapp-designer.directory=PATH` to use `PATH` instead of the `app-designer` submodule
 
 ## Build HTML for Tables
 In `app-designer`, run `grunt compile-config-templates`.
