@@ -2,11 +2,11 @@
 
 ## About
 - This is an open source project developed for humanitarian responses
-- The user manual can be found at https://reliefweb.int/report/world/rc2-relief-user-manual-all-users
+- Be sure to consult the [user manual](https://reliefweb.int/report/world/rc2-relief-user-manual-all-users)
 
 ## Dependencies
 - Maven 3.6 or higher
-	- Can be downloaded at https://maven.apache.org/download.cgi
+	- Can be downloaded from [Apache](https://maven.apache.org/download.cgi)
 	- Ensure that your `PATH` is set to Maven's `bin` folder.
  		- Navigate to the enviromental variables for your system.
  		- `MAVEN_HOME` should be added and set to the directory.
@@ -14,7 +14,7 @@
      	- `M2` should be added and set to the `bin` folder.
        		- I.e. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
 - Java 1.8 JDK
-	- Older versions of Java can be downloaded at oracle.com/java/technologies/downloads/archive/ (requires an Oracle account)
+	- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/downloads/archive/) (requires an Oracle account)
  	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` in enviromental variables
  		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
    	- Once install is complete, it may also be neccessary to ensure that the editor being used is also set utilize 1.8
@@ -42,7 +42,7 @@ git clone --recurse-submodules https://github.com/RC2-Tools/RC2-desktop.git
 #After creating a fork into your own repository
 git clone --recurse-submodules https://github.com/<YourUserName>/RC2-desktop.git
 ```
-- `git` can be downloaded from https://git-scm.com/downloads
+- `git` can be downloaded from [git-scm](https://git-scm.com/downloads)
 - After logging into or making an account on GitHub, use button on upper right to make a `Fork` before doing second step
 
 ## Build
@@ -55,8 +55,8 @@ To make the installer, run `mvn clean deploy`
 
 ## Build HTML for Tables
 In `app-designer`, run `grunt compile-config-templates`.
-- `grunt` can be installed from https://gruntjs.com/getting-started
+- `grunt` can be installed from [gruntjs](https://gruntjs.com/getting-started)
 	- Requires `npm` which is an extension of `nvm`
-		- For Windows, get `nvm`/`npm` from https://github.com/coreybutler/nvm-windows
-		- For Linux/Mac get `npm`/`npm` https://github.com/nvm-sh/nvm
+		- For Windows, install [nvm-windows](https://github.com/coreybutler/nvm-windows)
+		- For Linux/Mac install [nvm](https://github.com/nvm-sh/nvm)
 		- Once `nvm` is installed, it may be neccessary to turn `nvm on` in the command line before `npm` is recognized
