@@ -7,15 +7,13 @@
 ## Dependencies
 - Maven 3.6 or higher
 	- Can be downloaded from [Apache](https://maven.apache.org/download.cgi)
-	- Ensure that your `PATH` is set to Maven's `bin` folder
- 		- Navigate to the enviromental variables for your system
- 		- `MAVEN_HOME` should be added and set to the directory
-   			- E.g. `C:\Program Files\Maven\apache-maven-3.8.4` (make adjustments for version and location)
-     	- `M2` should be added and set to the `bin` folder
-       		- I.e. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
+	- `MAVEN_HOME` variable should be set to the pathing for the main directory as an enviromental variable
+		- E.g. `C:\Program Files\Maven\apache-maven-3.8.4` (make adjustments for version and location)
+  	- `M2` variable should be set to the pathing for the `bin` folder as an enviromental variable
+  		- I.e. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
 - Java 1.8 JDK
 	- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html) (requires an Oracle account)
- 	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` in enviromental variables
+ 	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` as an enviromental variable
  		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
    	- Once install is complete, it may also be neccessary to ensure that the editor being used is also set utilize 1.8
 
