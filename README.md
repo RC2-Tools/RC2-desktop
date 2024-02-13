@@ -2,7 +2,7 @@
 
 ## About
 - This is an open source project developed for humanitarian responses
-- Be sure to consult the [user manual](https://reliefweb.int/report/world/rc2-relief-user-manual-all-users)
+- Consult the [user manual](https://reliefweb.int/report/world/rc2-relief-user-manual-all-users) for further details
 
 ## Dependencies
 - Maven 3.6 or higher
