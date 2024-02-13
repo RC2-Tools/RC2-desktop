@@ -15,7 +15,7 @@
 	- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html) (requires an Oracle account)
  	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` as an environmental variable
  		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
-   	- Once install is complete, it may also be neccessary to ensure that the editor being used is also set utilize 1.8
+   	- Once install is complete, it may also be necessary to ensure that the editor being used is also set utilize 1.8
 
 >#### Setting Environmental Variables
 >##### Windows
@@ -55,4 +55,4 @@ To make the installer, run `mvn clean deploy`
 		- Requires `npm` which is an extension of `nvm`
 			- For Windows, install [nvm-windows](https://github.com/coreybutler/nvm-windows)
 			- For Linux/Mac install [nvm](https://github.com/nvm-sh/nvm)
-			- Once `nvm` is installed, it may be neccessary to turn `nvm on` in the command line before `npm` is recognized
+			- Once `nvm` is installed, it may be necessary to turn `nvm on` in the command line before `npm` is recognized
