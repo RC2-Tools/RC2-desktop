@@ -42,8 +42,8 @@ git clone --recurse-submodules https://github.com/<YourUserName>/RC2-desktop.git
 - After logging into or making an account on GitHub, use button on upper right to make a ***Fork*** before doing second step
 
 ## Build
-Run `mvn clean install`
-To make the installer, run `mvn clean deploy`
+- Run `mvn clean install`
+- To make the installer, run `mvn clean deploy`
 
 >#### Optional
 >- Use `-DskipTests` to skip tests
