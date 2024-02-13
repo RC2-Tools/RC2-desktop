@@ -5,17 +5,17 @@
 - Consult the [user manual](https://reliefweb.int/report/world/rc2-relief-user-manual-all-users) for further details
 
 ## Dependencies
-- Maven 3.6 or higher
-	- Can be downloaded from [Apache](https://maven.apache.org/download.cgi)
-	- `MAVEN_HOME` variable should be set to the pathing for the main directory as an environmental variable
-		- E.g. `C:\Program Files\Maven\apache-maven-3.8.4` (make adjustments for version and location)
-  	- `M2` variable should be set to the pathing for the `bin` folder as an environmental variable
-  		- I.e. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
-- Java 1.8 JDK
-	- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html) (requires an Oracle account)
- 	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` as an environmental variable
- 		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
-   	- Once install is complete, it may also be necessary to ensure that the editor being used is also set utilize 1.8
+#### Maven 3.6 or higher
+- Can be downloaded from [Apache](https://maven.apache.org/download.cgi)
+- `MAVEN_HOME` variable should be set to the pathing for the main directory as an environmental variable
+	- E.g. `C:\Program Files\Maven\apache-maven-3.8.4` (make adjustments for version and location)
+- `M2` variable should be set to the pathing for the `bin` folder as an environmental variable
+	- I.e. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
+#### Java 1.8 JDK
+- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html) (requires an Oracle account)
+- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` as an environmental variable
+	- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
+- Once install is complete, it may also be necessary to ensure that the editor being used is also set utilize 1.8
 
 >#### Setting Environmental Variables
 >##### Windows
