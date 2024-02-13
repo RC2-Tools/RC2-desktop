@@ -7,17 +7,17 @@
 ## Dependencies
 - Maven 3.6 or higher
 	- Can be downloaded from [Apache](https://maven.apache.org/download.cgi)
-	- `MAVEN_HOME` variable should be set to the pathing for the main directory as an enviromental variable
+	- `MAVEN_HOME` variable should be set to the pathing for the main directory as an environmental variable
 		- E.g. `C:\Program Files\Maven\apache-maven-3.8.4` (make adjustments for version and location)
-  	- `M2` variable should be set to the pathing for the `bin` folder as an enviromental variable
+  	- `M2` variable should be set to the pathing for the `bin` folder as an environmental variable
   		- I.e. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
 - Java 1.8 JDK
 	- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html) (requires an Oracle account)
- 	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` as an enviromental variable
+ 	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` as an environmental variable
  		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
    	- Once install is complete, it may also be neccessary to ensure that the editor being used is also set utilize 1.8
 
->#### Setting Enviromental Variables
+>#### Setting Environmental Variables
 >##### Windows
 >- ***Control Panel*** **>** ***System and Security*** **>** ***System*** **>** ***Advanced System Settings*** **>** ***Enviroment Variables*** **>** (under *System Variables*) ***New***<br><hr>**<ins>OR</ins>** search `system environment variables` in ***Search Bar*** **>** select ***Edit the system enviroment variables*** **>** ***Enviroment Variables*** **>** (under *System Variables*) ***New***<hr>
 >	- Set ***Variable name*** to *[respective name]*
