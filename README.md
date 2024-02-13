@@ -14,7 +14,7 @@
      	- `M2` should be added and set to the `bin` folder
        		- I.e. `%MAVEN_HOME%\bin` (Windows), `$MAVEN_HOME/bin` (Linux, Mac)
 - Java 1.8 JDK
-	- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/downloads/archive/) (requires an Oracle account)
+	- Older versions of Java can be downloaded from [Oracle](https://www.oracle.com/java/technologies/javase/javase8u211-later-archive-downloads.html) (requires an Oracle account)
  	- `JAVA_HOME` variable should be set to the pathing for `jdk-1.8` in enviromental variables
  		- E.g. `C:\Program Files\Java\jdk-1.8` (make adjustments for location)
    	- Once install is complete, it may also be neccessary to ensure that the editor being used is also set utilize 1.8
